@@ -18,7 +18,7 @@ public class Node : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        // Display Cost on Gizmos
+        // Display Node Cost on Gizmos
         Handles.Label(transform.position + Vector3.up/2, Cost.ToString(), new GUIStyle() { fontSize = 20, fontStyle = FontStyle.Bold });
     }
     private void OnDrawGizmosSelected() {

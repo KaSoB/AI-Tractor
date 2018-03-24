@@ -10,6 +10,7 @@ TagManager:
   - CornField
   - Tree
   - Node
+  - UIPoint
   layers:
   - Default
   - TransparentFX
