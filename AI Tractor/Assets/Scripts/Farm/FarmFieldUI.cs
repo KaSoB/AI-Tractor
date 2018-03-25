@@ -54,7 +54,7 @@ public class FarmFieldUI : MonoBehaviour, IObserver {
         SetTitle(farmField.ToString());
         SetSlider(farmField.Progress);
         foreach (var propertyUI in items) { // Set properties
-            propertyUI.SetObject(farmField.properties[propertyUI.GetPropertyType()]);
+            propertyUI.SetObject(farmField.GetProperty(propertyUI.GetPropertyType()));
         }
     }
     private void SetTitle(string title) {

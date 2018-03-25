@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 65102216728837966}
   m_Layer: 0
   m_Name: WheatField0
-  m_TagString: WheatField
+  m_TagString: FarmField
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

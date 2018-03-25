@@ -1,39 +1,39 @@
-﻿using System.Collections;
+﻿using SearchAlgorithm;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class NodesGrid : MonoBehaviour {
-    private PathFind.Grid grid;
-
-    private float[,] tilesMap;
+public class NodesGrid : MonoBehaviour, IGrid<Node> {
+    private Node[,] nodes;
+    public int Width { get; set; }
+    public int Height { get; set; }
 
     void Start() {
-        var nodes = GameObject.FindGameObjectsWithTag("Node").Select(x => x.GetComponent<Node>()).ToList();
-        grid = CreateTilesMap(nodes);
+        List<Node> tmpNodes = GameObject.FindGameObjectsWithTag("Node").Select(x => x.GetComponent<Node>()).ToList();
+        Width = tmpNodes.Max(it => it.X) + 1;
+        Height = tmpNodes.Max(it => it.Y) + 1;
+        nodes = new Node[Width, Height];
+        tmpNodes.ForEach(item => nodes[item.X, item.Y] = item);
     }
 
-    public Queue<PathFind.Point> GetPath(Vector3 startPosition, Vector3 target) {
-        PathFind.Point starPos = new PathFind.Point((int) startPosition.x, (int) startPosition.z);
-        PathFind.Point targetPos = new PathFind.Point((int) target.x, (int) target.z);
-        return new Queue<PathFind.Point>(PathFind.Pathfinding.FindPath(grid, starPos, targetPos));
+    public Queue<Node> GetPath(Vector3 startPosition, Vector3 target) {
+        Node startNode = nodes[(int) startPosition.x, (int) startPosition.z]; // may produce out of array
+        Node targetNode = nodes[(int) target.x, (int) target.z]; // may produce out of array
+        return AStar.FindPath(this, startNode, targetNode);
     }
 
-    void Update() {
-
-    }
-
-    private PathFind.Grid CreateTilesMap(List<Node> nodes) {
-        
-        int x = nodes.Max(it => it.X) + 1;
-        int y = nodes.Max(it => it.Y) + 1;
-
-        tilesMap = new float[x, y];
-     
-        foreach (var node in nodes) {
-            tilesMap[node.X, node.Y] = node.Cost;
+    public void InitGrid() {
+        for (int i = 0 ; i < Width ; i++) {
+            for (int j = 0 ; j < Height ; j++) {
+                nodes[i, j].ClearScore(); // TODO: Sprawdzic czy nie na odwrót i,j
+            }
         }
-
-        return new PathFind.Grid(x, y, tilesMap);
+    }
+    public bool IsInsideGrid(int x, int y) {
+        return (x >= 0 && x < Width && y >= 0 && y < Height);
+    }
+    public Node GetNode(int x, int y) {
+        return nodes[x, y];
     }
 }

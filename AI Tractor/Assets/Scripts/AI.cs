@@ -13,7 +13,7 @@ public class AI : MonoBehaviour {
     public NodesGrid nodesGrid;
 
 
-    private Queue<PathFind.Point> path = new Queue<PathFind.Point>();
+    private Queue<Node> path = new Queue<Node>();
     private Vector3 target = Vector3.zero;
 
     private void Start() {
@@ -23,12 +23,16 @@ public class AI : MonoBehaviour {
     public void GoTo(Vector3 destination) {
         path.Clear();
         path = nodesGrid.GetPath(transform.position, destination);
+        if(path == null) {
+            Debug.Log("Zwracam nulla");
+        }
     }
 
     private void Update() {
         if (IsReachedTarget() && path.Any()) {
             var point = path.Dequeue();
-            target = new Vector3(point.x, 0, point.y);
+            target = point.transform.position;
+            target = new Vector3(target.x, 0, target.z);
             agentComponent.destination = target;
         }
 

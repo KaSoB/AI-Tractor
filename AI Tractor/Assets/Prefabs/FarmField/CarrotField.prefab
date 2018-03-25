@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 65527227617805716}
   m_Layer: 0
   m_Name: CarrotField
-  m_TagString: CarrotField
+  m_TagString: FarmField
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 4948577592936044}
   m_Layer: 0
   m_Name: Body
-  m_TagString: CarrotField
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

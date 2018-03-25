@@ -18,7 +18,8 @@ public class FarmField : ObservableMonoBehaviour {
             NotifyProgress(value);
         }
     }
-    public Dictionary<Property.Type, Property> properties = new Dictionary<Property.Type, Property>() {
+
+    private Dictionary<Property.Type, Property> properties = new Dictionary<Property.Type, Property>() {
         { Property.Type.Humidity, new Property(Property.Type.Humidity) },
         { Property.Type.Fertylity, new Property(Property.Type.Fertylity) },
         { Property.Type.Acidity, new Property(Property.Type.Acidity) },
@@ -32,6 +33,15 @@ public class FarmField : ObservableMonoBehaviour {
         } else {
             print("Fail");
         }
+    }
+    public int GetLevel(Property.Type id) {
+        return properties[id].Level;
+    }
+    public Property GetProperty(Property.Type id) {
+        return properties[id];
+    }
+    public int Count() {
+        return properties.Count;
     }
     void Start() {
         Progress = Random.Range(0f, 1f);
@@ -47,11 +57,10 @@ public class FarmField : ObservableMonoBehaviour {
         }
         tmp_timer = 0F;
 
-      
-      
+
         float updateProgress = Progress + (float)(properties[Property.Type.Fertylity].Level) / 70 - (float) (properties[Property.Type.Toxity].Level) / 130;// TODO
         Progress = Mathf.Clamp(updateProgress, 0F, 1F);// TODO
-        print(Progress);// TODO
+
 
     }
 

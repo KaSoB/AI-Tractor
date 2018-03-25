@@ -5,12 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Grass
-  - WheatField
-  - CarrotField
-  - CornField
   - Tree
   - Node
   - UIPoint
+  - FarmField
   layers:
   - Default
   - TransparentFX
