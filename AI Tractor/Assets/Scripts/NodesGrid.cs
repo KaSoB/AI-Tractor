@@ -1,4 +1,4 @@
-﻿using SearchAlgorithm;
+﻿using AStarPathFinding;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,7 @@ public class NodesGrid : MonoBehaviour, IGrid<Node> {
         return AStar.FindPath(this, startNode, targetNode);
     }
 
-    public void InitGrid() {
+    public void ClearScore() {
         for (int i = 0 ; i < Width ; i++) {
             for (int j = 0 ; j < Height ; j++) {
                 nodes[i, j].ClearScore(); // TODO: Sprawdzic czy nie na odwrót i,j

@@ -1,4 +1,4 @@
-﻿using SearchAlgorithm;
+﻿using AStarPathFinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +27,13 @@ public class Node : MonoBehaviour, INode<Node> {
         get { return G_Score + H_Score; }
     }
 
+    [SerializeField]
+    [Range(0F,50F)]
+    private int cost;
+    public int Cost {
+        get { return cost; }
+    }
+
     private void Awake() {
         X = (int) transform.position.x;
         Y = (int) transform.position.z;  // w 3D component Z odpowiednikiem componentu Y w 2D
@@ -50,10 +57,10 @@ public class Node : MonoBehaviour, INode<Node> {
     }
 
     private void OnDrawGizmos() {
-        var guiStyle = new GUIStyle() { fontSize = 18, fontStyle = FontStyle.Bold };
+        var guiStyle = new GUIStyle() { fontSize = 17, fontStyle = FontStyle.Bold };
         guiStyle.normal.textColor = Walkable ? Color.green : Color.red;
 
-        Handles.Label(transform.position + Vector3.up / 2, (Walkable ? string.Format("T (G: {0} H: {1})", G_Score, H_Score) : "F"), guiStyle);
+        Handles.Label(transform.position + Vector3.up / 2, (Walkable ? string.Format("T (C: {0} G: {1} H: {2})", Cost, G_Score, H_Score) : "F"), guiStyle);
 
         if (Parent != null) {
             Gizmos.color = IsCorrectPath ? Color.green : Color.white;

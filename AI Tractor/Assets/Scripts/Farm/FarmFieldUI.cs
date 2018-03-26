@@ -13,7 +13,7 @@ public class FarmFieldUI : MonoBehaviour, IObserver {
     [SerializeField]
     private Text title;
     [SerializeField]
-    private Slider progressSlider;
+    private Text percentageOfCompletion;
     [SerializeField]
     private List<PropertyUI> items = new List<PropertyUI>();
 
@@ -34,25 +34,31 @@ public class FarmFieldUI : MonoBehaviour, IObserver {
     private void ClickToSelectObject() {
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
-            selectedFarmField = hit.transform.gameObject.GetComponent<FarmField>();
-            if (selectedFarmField != null) {
+            var selectedObject = hit.transform.gameObject.GetComponent<FarmField>();
+            if (selectedObject != null) {
+                UnSubscribeSubject();
+                selectedFarmField = selectedObject;
                 panel.SetActive(true); // Show Panel
-                selectedFarmField.Attach(this); // Subscribe subject
-                SetFarmInfo(selectedFarmField); // Display info on UI panel
+                selectedObject.Attach(this); // Subscribe subject
+                SetFarmInfo(selectedObject); // Display info on UI panel
             }
         }
     }
 
     private void Close() {
+        UnSubscribeSubject();
+        panel.SetActive(false); // Hide Panel
+    }
+
+    private void UnSubscribeSubject() {
         if (selectedFarmField != null) {
             selectedFarmField.Detach(this); // Unsubscribe subject
         }
-        panel.SetActive(false); // Hide Panel
     }
 
     private void SetFarmInfo(FarmField farmField) {
         SetTitle(farmField.ToString());
-        SetSlider(farmField.Progress);
+        SetProgress(farmField.Progress);
         foreach (var propertyUI in items) { // Set properties
             propertyUI.SetObject(farmField.GetProperty(propertyUI.GetPropertyType()));
         }
@@ -60,8 +66,8 @@ public class FarmFieldUI : MonoBehaviour, IObserver {
     private void SetTitle(string title) {
         this.title.text = title.ToString().ToUpper();
     }
-    private void SetSlider(float value) {
-        progressSlider.value = value;
+    private void SetProgress(float value) {
+        percentageOfCompletion.text = String.Format("{0:P2}", value);
     }
 
     public void UpdateProperty(Property property) {
@@ -69,7 +75,7 @@ public class FarmFieldUI : MonoBehaviour, IObserver {
     }
 
     public void UpdateProgress(float progress) {
-        SetSlider(progress);
+        SetProgress(progress);
     }
 }
 

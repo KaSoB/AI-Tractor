@@ -9,6 +9,7 @@ TagManager:
   - Node
   - UIPoint
   - FarmField
+  - AI
   layers:
   - Default
   - TransparentFX

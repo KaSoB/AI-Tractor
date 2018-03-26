@@ -21,15 +21,11 @@ public class AI : MonoBehaviour {
     }
 
     public void GoTo(Vector3 destination) {
-        path.Clear();
         path = nodesGrid.GetPath(transform.position, destination);
-        if(path == null) {
-            Debug.Log("Zwracam nulla");
-        }
     }
 
     private void Update() {
-        if (IsReachedTarget() && path.Any()) {
+        if (path != null && IsReachedTarget() && path.Any()) {
             var point = path.Dequeue();
             target = point.transform.position;
             target = new Vector3(target.x, 0, target.z);

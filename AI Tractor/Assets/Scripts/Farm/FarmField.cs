@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class FarmField : ObservableMonoBehaviour {
@@ -23,7 +24,7 @@ public class FarmField : ObservableMonoBehaviour {
         { Property.Type.Humidity, new Property(Property.Type.Humidity) },
         { Property.Type.Fertylity, new Property(Property.Type.Fertylity) },
         { Property.Type.Acidity, new Property(Property.Type.Acidity) },
-        { Property.Type.Toxity, new Property( Property.Type.Toxity) }
+        { Property.Type.Pollution, new Property( Property.Type.Pollution) }
     };
 
     public void SetProperty(Property.Type id, int value) {
@@ -58,7 +59,7 @@ public class FarmField : ObservableMonoBehaviour {
         tmp_timer = 0F;
 
 
-        float updateProgress = Progress + (float)(properties[Property.Type.Fertylity].Level) / 70 - (float) (properties[Property.Type.Toxity].Level) / 130;// TODO
+        float updateProgress = Progress + (float)(properties[Property.Type.Fertylity].Level) / 70 - (float) (properties[Property.Type.Pollution].Level) / 130;// TODO
         Progress = Mathf.Clamp(updateProgress, 0F, 1F);// TODO
 
 

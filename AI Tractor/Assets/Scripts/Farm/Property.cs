@@ -10,7 +10,7 @@ public class Property {
     public const int MAX_LEVEL = 5;
     // Zmiana powyższej wartości wymaga zmian w warstwie UI
     public enum Type {
-        Humidity, Fertylity, Acidity, Toxity
+        Humidity, Fertylity, Acidity, Pollution
     }
 
     public Type PropertyType { get; set; }
