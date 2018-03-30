@@ -13,11 +13,19 @@ public class Node : MonoBehaviour, INode<Node> {
         get { return walkable; }
     }
 
+    [SerializeField]
+    [Range(0F, 50F)]
+    private int cost;
+    public int Cost {
+        get { return cost; }
+    }
+
+    public bool displayGUIinEditMode;
+
     public bool IsCorrectPath { get; set; }
 
     public int X { get; set; }
     public int Y { get; set; }
-
 
     public Node Parent { get; set; }
 
@@ -25,13 +33,6 @@ public class Node : MonoBehaviour, INode<Node> {
     public int H_Score { get; set; }
     public int F_Score {
         get { return G_Score + H_Score; }
-    }
-
-    [SerializeField]
-    [Range(0F,50F)]
-    private int cost;
-    public int Cost {
-        get { return cost; }
     }
 
     private void Awake() {
@@ -46,6 +47,22 @@ public class Node : MonoBehaviour, INode<Node> {
         Parent = null;
     }
 
+    private void OnDrawGizmos() {
+        if (!displayGUIinEditMode) {
+            return;
+        }
+
+        var guiStyle = new GUIStyle() { fontSize = 17, fontStyle = FontStyle.Bold };
+        guiStyle.normal.textColor = Walkable ? Color.green : Color.red;
+
+        Handles.Label(transform.position + Vector3.up / 2, (Walkable ? string.Format("(C: {0} G: {1} H: {2})", Cost, G_Score, H_Score) : "F"), guiStyle);
+
+        if (Parent != null) {
+            Gizmos.color = IsCorrectPath ? Color.green : Color.white;
+            Gizmos.DrawLine(transform.position, Parent.transform.position);
+        }
+    }
+
     public int CompareTo(Node other) {
         if (F_Score > other.F_Score) {
             return 1;
@@ -53,18 +70,6 @@ public class Node : MonoBehaviour, INode<Node> {
             return 1;
         } else {
             return -1;
-        }
-    }
-
-    private void OnDrawGizmos() {
-        var guiStyle = new GUIStyle() { fontSize = 17, fontStyle = FontStyle.Bold };
-        guiStyle.normal.textColor = Walkable ? Color.green : Color.red;
-
-        Handles.Label(transform.position + Vector3.up / 2, (Walkable ? string.Format("T (C: {0} G: {1} H: {2})", Cost, G_Score, H_Score) : "F"), guiStyle);
-
-        if (Parent != null) {
-            Gizmos.color = IsCorrectPath ? Color.green : Color.white;
-            Gizmos.DrawLine(transform.position, Parent.transform.position);
         }
     }
 

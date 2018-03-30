@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class FarmSimulator : MonoBehaviour {
     private List<FarmField> farmLand = new List<FarmField>();
-
     private float updateTime = 3.0F;
-
 
     void Start() {
         farmLand = GameObject.FindGameObjectsWithTag("FarmField").Select(y => y.GetComponent<FarmField>()).ToList();
@@ -15,13 +13,13 @@ public class FarmSimulator : MonoBehaviour {
     }
 
     private void Run() {
-        InvokeRepeating("ModifyFarmland", 1F, updateTime);
+        InvokeRepeating("ModifyEnvironment", 1F, updateTime);
     }
     private void Stop() {
         CancelInvoke();
     }
 
-    private void ModifyFarmland() {
+    private void ModifyEnvironment() {
         int randomFarmFieldIndex = Random.Range(0, farmLand.Count);
         FarmField farmField = farmLand[randomFarmFieldIndex];
 
@@ -34,17 +32,7 @@ public class FarmSimulator : MonoBehaviour {
 
         farmField.SetProperty(randomPropertyType, level);
 
-        Note(farmField, randomPropertyType, level);
+        Debug.Log(string.Format("Pole {0} ma nową wartość ({2}) we właściwości {1}", farmField.gameObject.name, randomPropertyType, level));
     }
 
-    private void Note(FarmField farmField, Property.Type propertyType, int value) {
-        // TODO:
-        print(string.Format("Pole {0} ma nową wartość ({2}) we właściwości {1}", farmField.gameObject.name, propertyType, value));
-    }
-    
-    public void ChangeUpdateTime(float value01) {
-        Stop();
-        updateTime = value01 * 3; // multipler
-        Run();
-    }
 }

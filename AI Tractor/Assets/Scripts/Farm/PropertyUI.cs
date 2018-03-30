@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class PropertyUI : MonoBehaviour {
     private const string POINT_TAG = "UIPoint";
 
-
     [SerializeField]
     private Property.Type propertyType;
 
@@ -16,16 +15,16 @@ public class PropertyUI : MonoBehaviour {
     [SerializeField]
     private Sprite blankRectangleSprite;// TODO
 
+    private void Start() {
+        GetComponentInChildren<Text>().text = propertyType.ToString().ToUpper();
+    }
 
-    public void SetObject(Property property) {
-        // Set property name
-        GetComponentInChildren<Text>().text = property.ToString().ToUpper();
-        // Set Image  
+    public void SetLevel(int level) {
         var images = GetComponentsInChildren<Image>().Where(x => x.tag == POINT_TAG);
-        foreach (var image in images.Take(property.Level)) {
+        foreach (var image in images.Take(level)) {
             image.sprite = fillRectangleSprite;
         }
-        foreach (var image in images.Skip(property.Level)) {
+        foreach (var image in images.Skip(level)) {
             image.sprite = blankRectangleSprite;
         }
     }

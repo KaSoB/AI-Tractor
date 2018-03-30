@@ -7,10 +7,11 @@ public class FarmField : ObservableMonoBehaviour {
     public enum FieldType {
         Corn, Wheat, Carrot
     }
-
+   
     [SerializeField]
     private FieldType fieldType;
 
+    private float progressRepeatTime = 4F;
     private float progress;
     public float Progress {
         get { return progress; }
@@ -38,33 +39,28 @@ public class FarmField : ObservableMonoBehaviour {
     public int GetLevel(Property.Type id) {
         return properties[id].Level;
     }
+
     public Property GetProperty(Property.Type id) {
         return properties[id];
     }
+
     public int Count() {
         return properties.Count;
     }
+
     void Start() {
-        Progress = Random.Range(0f, 1f);
+        Progress = Random.Range(0F, 1F);
+        InvokeRepeating("Grow", 1F, progressRepeatTime);
     }
 
-    private float timeUpdate = 3.5F; // TODO
-    private float tmp_timer; // tODO
+    private void Grow() {
+        float updateProgress = 
+            Progress 
+            + (float) (properties[Property.Type.Fertylity].Level) / 70 // jakaś stała
+            - (float) (properties[Property.Type.Pollution].Level) / 130; // jakaś stała
 
-    public void Update() { // TODO
-        tmp_timer += Time.fixedDeltaTime;
-        if (tmp_timer < timeUpdate) {
-            return;
-        }
-        tmp_timer = 0F;
-
-
-        float updateProgress = Progress + (float)(properties[Property.Type.Fertylity].Level) / 70 - (float) (properties[Property.Type.Pollution].Level) / 130;// TODO
-        Progress = Mathf.Clamp(updateProgress, 0F, 1F);// TODO
-
-
+        Progress = Mathf.Clamp(updateProgress, 0F, 1F);
     }
-
     public void Harvest() {
         Progress = 0F;
     }

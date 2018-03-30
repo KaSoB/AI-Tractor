@@ -63,21 +63,19 @@ namespace ServerService {
         protected void HandleClient(TcpClient client) {
             try {
                 SendText(client, "Hello");
-                Debug.Log("Odebrano od klienta: " + LoadText(client)[0]);
                 Clients.Add(client);
             } catch {
                 Debug.Log("Nie uzyskano odpowiedzi od klienta lub utracono połączenie.");
             }
         }
 
-
-        private string[] LoadText(TcpClient c) {
+        public string[] LoadText(TcpClient c) {
             byte[] buffer = new byte[c.ReceiveBufferSize];
             int bytesRead = c.GetStream().Read(buffer, 0, c.ReceiveBufferSize);
             string text = Encoding.ASCII.GetString(buffer, 0, bytesRead);
             return text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         }
-        private void SendText(TcpClient c, string text) {
+        public void SendText(TcpClient c, string text) {
             text += '\n';  // Dodanie znaku końca linii
             byte[] buffer = Encoding.ASCII.GetBytes(text);
             c.GetStream().Write(buffer, 0, buffer.Length);

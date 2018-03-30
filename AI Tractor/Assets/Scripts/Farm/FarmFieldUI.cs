@@ -60,7 +60,7 @@ public class FarmFieldUI : MonoBehaviour, IObserver {
         SetTitle(farmField.ToString());
         SetProgress(farmField.Progress);
         foreach (var propertyUI in items) { // Set properties
-            propertyUI.SetObject(farmField.GetProperty(propertyUI.GetPropertyType()));
+            propertyUI.SetLevel(farmField.GetProperty(propertyUI.GetPropertyType()).Level);
         }
     }
     private void SetTitle(string title) {
@@ -71,7 +71,7 @@ public class FarmFieldUI : MonoBehaviour, IObserver {
     }
 
     public void UpdateProperty(Property property) {
-        items.Where(y => y.GetPropertyType() == property.PropertyType).First().SetObject(property);
+        items.Where(y => y.GetPropertyType() == property.PropertyType).First().SetLevel(property.Level);
     }
 
     public void UpdateProgress(float progress) {

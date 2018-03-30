@@ -17,9 +17,7 @@ public class Property {
 
     private int _Level;
     public int Level {
-        get {
-            return _Level;
-        }
+        get { return _Level; }
         set {
             if (IsInRange(value)) {
                 _Level = value;

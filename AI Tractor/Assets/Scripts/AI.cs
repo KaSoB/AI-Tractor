@@ -7,11 +7,9 @@ using UnityEngine.AI;
 
 public class AI : MonoBehaviour {
     private NavMeshAgent agentComponent;
+    //private Queue<Task> tasks = new Queue<Task>();
     
-    // TODO: tu wszystko zostanie przebudowane. Sprawdzam A*
-
     public NodesGrid nodesGrid;
-
 
     private Queue<Node> path = new Queue<Node>();
     private Vector3 target = Vector3.zero;

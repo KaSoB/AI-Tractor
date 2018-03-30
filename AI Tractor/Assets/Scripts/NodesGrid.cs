@@ -18,16 +18,21 @@ public class NodesGrid : MonoBehaviour, IGrid<Node> {
     }
 
     public Queue<Node> GetPath(Vector3 startPosition, Vector3 target) {
-        Node startNode = nodes[(int) startPosition.x, (int) startPosition.z]; // may produce out of array
-        Node targetNode = nodes[(int) target.x, (int) target.z]; // may produce out of array
+        int xStart = (int) startPosition.x;
+        int yStart = (int) startPosition.z;
+        int xTarget = (int) target.x;
+        int yTarget = (int) target.z;
+        if (!IsInsideGrid(xStart,yStart) || !IsInsideGrid(xTarget,yTarget)) {
+            return null;
+        }
+        Node startNode = nodes[xStart,yStart]; 
+        Node targetNode = nodes[xTarget, yTarget];
         return AStar.FindPath(this, startNode, targetNode);
     }
 
     public void ClearScore() {
-        for (int i = 0 ; i < Width ; i++) {
-            for (int j = 0 ; j < Height ; j++) {
-                nodes[i, j].ClearScore(); // TODO: Sprawdzic czy nie na odwrót i,j
-            }
+        foreach (var item in nodes) {
+            item.ClearScore();
         }
     }
     public bool IsInsideGrid(int x, int y) {
