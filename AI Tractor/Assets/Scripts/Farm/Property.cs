@@ -15,12 +15,12 @@ public class Property {
 
     public Type PropertyType { get; set; }
 
-    private int _Level;
+    private int level;
     public int Level {
-        get { return _Level; }
+        get { return level; }
         set {
             if (IsInRange(value)) {
-                _Level = value;
+                level = value;
             } else {
                 Debug.Log(string.Format("Właściwości {0} próbowano przypisać niewłaściwy poziom {1}", PropertyType, value));
             }
@@ -32,12 +32,12 @@ public class Property {
         Level = initLevel;
     }
 
-    public override string ToString() {
-        return PropertyType.ToString();
+    private bool IsInRange(int level) {
+        return level >= MIN_LEVEL && level <= MAX_LEVEL;
     }
 
-    private bool IsInRange(int level) {
-        return level <= MAX_LEVEL && level >= MIN_LEVEL;
+    public override string ToString() {
+        return PropertyType.ToString();
     }
 }
 

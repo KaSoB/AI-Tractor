@@ -38,6 +38,9 @@ public class NodesGrid : MonoBehaviour, IGrid<Node> {
     public bool IsInsideGrid(int x, int y) {
         return (x >= 0 && x < Width && y >= 0 && y < Height);
     }
+    public bool IsWalkableGrid(int x, int y) {
+        return nodes[x, y].Walkable;
+    }
     public Node GetNode(int x, int y) {
         return nodes[x, y];
     }

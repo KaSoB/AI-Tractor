@@ -8,13 +8,13 @@ namespace AStarPathFinding {
     public static class AStar {
         // Info: https://en.wikipedia.org/wiki/A*_search_algorithm
 
-        public static Queue<T> FindPath<T,Y>(Y grid, T startNode, T targetNode) where T : INode<T> where Y : IGrid<T> {
-            if(!startNode.Walkable || !targetNode.Walkable) {
+        public static Queue<T> FindPath<T, Y>(Y grid, T startNode, T targetNode) where T : INode<T> where Y : IGrid<T> {
+            if (!startNode.Walkable || !targetNode.Walkable) {
                 return null;
             }
 
             grid.ClearScore();
-            
+
             List<T> openSet = new List<T>();
             HashSet<T> closedSet = new HashSet<T>();
             openSet.Add(startNode);
@@ -32,10 +32,10 @@ namespace AStarPathFinding {
                         continue;
                     }
 
-                    int costToNeighbour = currentNode.G_Score + GetDistance(currentNode, neighbour) + neighbour.Cost;
+                    int costToNeighbour = currentNode.G_Score + GetDistance(currentNode.X, currentNode.Y, neighbour.X, neighbour.Y) + neighbour.Cost;
                     if (costToNeighbour < neighbour.G_Score || !openSet.Contains(neighbour)) {
                         neighbour.G_Score = costToNeighbour;
-                        neighbour.H_Score = GetDistance(neighbour, targetNode);
+                        neighbour.H_Score = GetDistance(neighbour.X, neighbour.Y, targetNode.X, targetNode.Y);
                         neighbour.Parent = currentNode;
 
                         if (!openSet.Contains(neighbour))
@@ -75,9 +75,9 @@ namespace AStarPathFinding {
             return path;
         }
 
-        private static int GetDistance<T>(T nodeA, T nodeB) where T : INode<T> {
-            int dstX = Mathf.Abs(nodeA.X - nodeB.X);
-            int dstY = Mathf.Abs(nodeA.Y - nodeB.Y);
+        public static int GetDistance(int x1, int y1, int x2, int y2) {
+            int dstX = Mathf.Abs(x1 - x2);
+            int dstY = Mathf.Abs(y1 - y2);
 
             return (dstX > dstY) ? 14 * dstY + 10 * (dstX - dstY) : 14 * dstX + 10 * (dstY - dstX);
         }

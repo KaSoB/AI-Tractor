@@ -60,7 +60,7 @@ namespace ServerService {
                 }
             }
         }
-        protected void HandleClient(TcpClient client) {
+        private void HandleClient(TcpClient client) {
             try {
                 SendText(client, "Hello");
                 Clients.Add(client);
@@ -73,10 +73,10 @@ namespace ServerService {
             byte[] buffer = new byte[c.ReceiveBufferSize];
             int bytesRead = c.GetStream().Read(buffer, 0, c.ReceiveBufferSize);
             string text = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-            return text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            return text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries); // Split by '\n'
         }
         public void SendText(TcpClient c, string text) {
-            text += '\n';  // Dodanie znaku końca linii
+            text += '\n';  // Add '\n' to mark the end of the message
             byte[] buffer = Encoding.ASCII.GetBytes(text);
             c.GetStream().Write(buffer, 0, buffer.Length);
         }

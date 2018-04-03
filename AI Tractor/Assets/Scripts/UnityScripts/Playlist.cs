@@ -6,9 +6,7 @@ public class Playlist : MonoBehaviour {
     [SerializeField]
     private Object[] soundTrack;
 
-
     private AudioSource audioSourceComponent;
-
     void Start() {
         audioSourceComponent = GetComponent<AudioSource>();
 

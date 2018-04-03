@@ -8,5 +8,6 @@ namespace AStarPathFinding {
         void ClearScore();
         T GetNode(int x, int y);
         bool IsInsideGrid(int x, int y);
+        bool IsWalkableGrid(int x, int y);
     }
 }

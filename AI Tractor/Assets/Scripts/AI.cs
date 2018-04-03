@@ -5,38 +5,44 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AI : MonoBehaviour {
-    private NavMeshAgent agentComponent;
-    //private Queue<Task> tasks = new Queue<Task>();
-    
-    public NodesGrid nodesGrid;
+public class AI : MonoBehaviour, INetworkController {
+    public TaskManager TaskManager { get; set; }
 
-    private Queue<Node> path = new Queue<Node>();
-    private Vector3 target = Vector3.zero;
 
     private void Start() {
-        agentComponent = GetComponent<NavMeshAgent>();
-    }
-
-    public void GoTo(Vector3 destination) {
-        path = nodesGrid.GetPath(transform.position, destination);
+        TaskManager = new TaskManager();
     }
 
     private void Update() {
-        if (path != null && IsReachedTarget() && path.Any()) {
-            var point = path.Dequeue();
-            target = point.transform.position;
-            target = new Vector3(target.x, 0, target.z);
-            agentComponent.destination = target;
-        }
+        //if ((TaskManager.CurrentTask == null || TaskManager.CurrentTask.IsCompleted) && TaskManager.HasTask()) {
+        //    TaskManager.GetNewTask();
+        //}
+
+        //if (TaskManager.CurrentTask == null) {
+        //    return;
+        //}
+
+        //if (TaskManager.CurrentTask.CheckConditionsToStartTask()) {
+        //    TaskManager.CurrentTask.OnTaskStart();
+        //} else {
+        //    TaskManager.CurrentTask.IsFinished = true;
+        //}
+
+        //if (TaskManager.CurrentTask.CheckConditionsToFinishTask()) {
+        //    TaskManager.CurrentTask.IsFinished = true;
+        //    Debug.Log("Zadanie wykonane!");
+        //} else {
+        //    TaskManager.CurrentTask.OnTaskUpdate();
+        //}
 
     }
 
-    private bool IsReachedTarget() {
-        return Vector3.Distance(transform.position, target) < 0.1F;
+    public string GetTextRaport() {
+        int x = (int) transform.position.x;
+        int y = (int) transform.position.z;
+
+        return string.Format("{0} {1} {2}", name, x, y);
     }
-
-
 }
 
 

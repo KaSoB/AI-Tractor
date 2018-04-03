@@ -4,10 +4,10 @@
 /// Script Purpose: Test AI Component.
 /// </summary>
 public class MoveToClickPoint : MonoBehaviour {
-    private AI agentComponent;
+    private AI agent;
 
     void Start() {
-        agentComponent = GetComponent<AI>();
+        agent = GetComponent<AI>();
     }
 
     void Update() {
@@ -16,7 +16,7 @@ public class MoveToClickPoint : MonoBehaviour {
             RaycastHit hit;
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
-                agentComponent.GoTo(hit.point);
+                agent.TaskManager.AddTask(new TaskGoTo(hit.point));
             }
         }
     }

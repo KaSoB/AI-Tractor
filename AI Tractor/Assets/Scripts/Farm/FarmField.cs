@@ -1,13 +1,14 @@
-﻿using System.Collections;
+﻿using AStarPathFinding;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
-public class FarmField : ObservableMonoBehaviour {
+public class FarmField : ObservableMonoBehaviour, INetworkIdentity {
     public enum FieldType {
         Corn, Wheat, Carrot
     }
-   
+
     [SerializeField]
     private FieldType fieldType;
 
@@ -20,7 +21,7 @@ public class FarmField : ObservableMonoBehaviour {
             NotifyProgress(value);
         }
     }
-
+    // TODO zmienić value na int
     private Dictionary<Property.Type, Property> properties = new Dictionary<Property.Type, Property>() {
         { Property.Type.Humidity, new Property(Property.Type.Humidity) },
         { Property.Type.Fertylity, new Property(Property.Type.Fertylity) },
@@ -54,19 +55,31 @@ public class FarmField : ObservableMonoBehaviour {
     }
 
     private void Grow() {
-        float updateProgress = 
-            Progress 
+        float updateProgress =
+            Progress
             + (float) (properties[Property.Type.Fertylity].Level) / 70 // jakaś stała
-            - (float) (properties[Property.Type.Pollution].Level) / 130; // jakaś stała
+            + (float) (properties[Property.Type.Humidity].Level) / 250 // jakaś stała
+            - (float) (properties[Property.Type.Pollution].Level) / 100; // jakaś stała
 
         Progress = Mathf.Clamp(updateProgress, 0F, 1F);
     }
     public void Harvest() {
         Progress = 0F;
     }
-
     public override string ToString() {
         return fieldType.ToString() + " field";
+    }
+
+    public string GetTextRaport() {
+        int x = (int) transform.position.x;
+        int y = (int) transform.position.z;
+
+        var playerPosition = GameObject.FindGameObjectWithTag("AI").transform.position;
+        int playerX = (int) playerPosition.x;
+        int playerY = (int) playerPosition.z;
+
+        return string.Format("{0} {1} {2} {3} {4} {5}",
+            name, fieldType, (Progress / 1F).ToString("0.##"), x, y, AStar.GetDistance(x, y, playerX, playerY));
     }
 }
 

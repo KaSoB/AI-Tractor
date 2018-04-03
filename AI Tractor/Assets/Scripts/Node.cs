@@ -20,7 +20,8 @@ public class Node : MonoBehaviour, INode<Node> {
         get { return cost; }
     }
 
-    public bool displayGUIinEditMode;
+    [SerializeField]
+    private bool showInfoInEditMode;
 
     public bool IsCorrectPath { get; set; }
 
@@ -48,7 +49,7 @@ public class Node : MonoBehaviour, INode<Node> {
     }
 
     private void OnDrawGizmos() {
-        if (!displayGUIinEditMode) {
+        if (!showInfoInEditMode) {
             return;
         }
 
