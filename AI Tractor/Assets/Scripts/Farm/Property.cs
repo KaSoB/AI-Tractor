@@ -5,7 +5,6 @@ using System.Text;
 using UnityEngine;
 
 public class Property {
-    public const int MIN_LEVEL = 0;
     public const int INIT_LEVEL = 3;
     public const int MAX_LEVEL = 5;
     // Zmiana powyższej wartości wymaga zmian w warstwie UI
@@ -33,7 +32,7 @@ public class Property {
     }
 
     private bool IsInRange(int level) {
-        return level >= MIN_LEVEL && level <= MAX_LEVEL;
+        return level >= 0 && level <= MAX_LEVEL;
     }
 
     public override string ToString() {

@@ -5,34 +5,34 @@ using System.Text;
 using UnityEngine;
 
 namespace AStarPathFinding {
+    /// <summary>
+    /// Info: https://en.wikipedia.org/wiki/A*_search_algorithm
+    /// </summary>
     public static class AStar {
-        // Info: https://en.wikipedia.org/wiki/A*_search_algorithm
-
-        public static Queue<T> FindPath<T, Y>(Y grid, T startNode, T targetNode) where T : INode<T> where Y : IGrid<T> {
+        public static IEnumerable<Node> FindPath(NodesGrid grid, Node startNode, Node targetNode) {
             if (!startNode.Walkable || !targetNode.Walkable) {
                 return null;
             }
-
             grid.ClearScore();
 
-            List<T> openSet = new List<T>();
-            HashSet<T> closedSet = new HashSet<T>();
+            List<Node> openSet = new List<Node>();
+            HashSet<Node> closedSet = new HashSet<Node>();
             openSet.Add(startNode);
-            while (openSet.Any()) {
-                T currentNode = openSet.Min();
 
-                if (currentNode.Equals(targetNode)) {
-                    return new Queue<T>(ReconstructPath(startNode, targetNode));
+            while (openSet.Any()) {
+                Node currentNode = openSet.Min();
+
+                if (currentNode == targetNode) {
+                    return ReconstructPath(startNode, targetNode);
                 }
 
                 openSet.Remove(currentNode);
                 closedSet.Add(currentNode);
-                foreach (T neighbour in GetNeighbours(grid, currentNode)) {
-                    if (!neighbour.Walkable || closedSet.Contains(neighbour)) {
-                        continue;
-                    }
 
-                    int costToNeighbour = currentNode.G_Score + GetDistance(currentNode.X, currentNode.Y, neighbour.X, neighbour.Y) + neighbour.Cost;
+                // znajdź wszystkich sąsiadów obecnego węzła, który jest przechodni i nie był wcześniej odwiedzany
+                foreach (Node neighbour in GetNeighbours(grid, currentNode).Where(it => it.Walkable && !closedSet.Contains(it))) {
+
+                    int costToNeighbour = currentNode.G_Score + neighbour.Cost + GetDistance(currentNode.X, currentNode.Y, neighbour.X, neighbour.Y);
                     if (costToNeighbour < neighbour.G_Score || !openSet.Contains(neighbour)) {
                         neighbour.G_Score = costToNeighbour;
                         neighbour.H_Score = GetDistance(neighbour.X, neighbour.Y, targetNode.X, targetNode.Y);
@@ -45,8 +45,9 @@ namespace AStarPathFinding {
             }
             return null;
         }
-        private static List<T> GetNeighbours<T>(IGrid<T> grid, T node) where T : INode<T> {
-            List<T> neighbours = new List<T>();
+
+        private static IEnumerable<Node> GetNeighbours(NodesGrid grid, Node node) {
+            List<Node> neighbours = new List<Node>();
             for (int x = -1 ; x <= 1 ; x++) {
                 for (int y = -1 ; y <= 1 ; y++) {
                     if (x == 0 && y == 0)
@@ -63,10 +64,10 @@ namespace AStarPathFinding {
             return neighbours;
         }
 
-        private static List<T> ReconstructPath<T>(T startNode, T targetNode) where T : INode<T> {
-            List<T> path = new List<T>();
-            T currentNode = targetNode;
-            while (!currentNode.Equals(startNode)) {
+        private static IEnumerable<Node> ReconstructPath(Node startNode, Node targetNode){
+            List<Node> path = new List<Node>();
+            Node currentNode = targetNode;
+            while (currentNode != startNode) {
                 currentNode.IsCorrectPath = true;
                 path.Add(currentNode);
                 currentNode = currentNode.Parent;
@@ -82,7 +83,5 @@ namespace AStarPathFinding {
             return (dstX > dstY) ? 14 * dstY + 10 * (dstX - dstY) : 14 * dstX + 10 * (dstY - dstX);
         }
     }
-
-
 }
 

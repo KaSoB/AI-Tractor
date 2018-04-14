@@ -4,13 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Grass
-  - Tree
   - Node
   - UIPoint
   - FarmField
   - AI
   - Grid
+  - Waypoint
   layers:
   - Default
   - TransparentFX

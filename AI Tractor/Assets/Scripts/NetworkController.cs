@@ -44,7 +44,7 @@ public class NetworkController : MonoBehaviour {
 
     private void Start() {
         farmFields = GameObject.FindGameObjectsWithTag("FarmField").Select(y => y.GetComponent<FarmField>()).ToList().ConvertAll(y => (INetworkIdentity) y).ToList();
-        agents = GameObject.FindGameObjectsWithTag("AI").Select(y => y.GetComponent<AI>()).ToList().ConvertAll(y => (INetworkController) y).ToList();
+        agents = GameObject.FindGameObjectsWithTag("AI").Select(y => y.GetComponent<Agent>()).ToList().ConvertAll(y => (INetworkController) y).ToList();
         server = new Server(IPAddress.Parse(serverIP), port, maxClients);
         InvokeRepeating("ServerUpdate", 1F, serverTimeUpdate);
     }

@@ -10,17 +10,13 @@ using UnityEngine.AI;
 /// </summary>
 abstract public class FSMBaseBehaviour : StateMachineBehaviour {
     protected GameObject tractorGameObject;
-    protected AI agent;
+    protected Agent agent;
     protected NavMeshAgent navMeshAgent;
-
-    private void Awake() {
-
-    }
-
+    protected bool hasFinished;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex) {
         tractorGameObject = animator.gameObject;
         navMeshAgent = tractorGameObject.GetComponent<NavMeshAgent>();
-        agent = tractorGameObject.GetComponent<AI>();
+        agent = tractorGameObject.GetComponent<Agent>();
     }
 
 }

@@ -12,10 +12,12 @@ public class FarmSimulator : MonoBehaviour {
         Run();
     }
 
-    private void Run() {
-        InvokeRepeating("ModifyEnvironment", 1F, updateTime);
+    public void Run() {
+        if (!IsInvoking("ModifyEnvironment")) {
+            InvokeRepeating("ModifyEnvironment", 1F, updateTime);
+        }
     }
-    private void Stop() {
+    public void Stop() {
         CancelInvoke();
     }
 

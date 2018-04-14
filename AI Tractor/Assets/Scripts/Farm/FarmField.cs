@@ -1,10 +1,16 @@
 ﻿using AStarPathFinding;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
-public class FarmField : ObservableMonoBehaviour, INetworkIdentity {
+
+public class EventArgs<T> : EventArgs {
+    public T Data { get; set; }
+}
+
+public class FarmField : MonoBehaviour, INetworkIdentity {
     public enum FieldType {
         Corn, Wheat, Carrot
     }
@@ -12,15 +18,23 @@ public class FarmField : ObservableMonoBehaviour, INetworkIdentity {
     [SerializeField]
     private FieldType fieldType;
 
+    #region Progress
     private float progressRepeatTime = 4F;
     private float progress;
     public float Progress {
         get { return progress; }
         set {
             progress = value;
-            NotifyProgress(value);
+            // Notify subscribers
+            if (OnUpdateProgressListener != null) {
+                OnUpdateProgressListener.Invoke(this, new EventArgs<float>() { Data = value });
+            }
         }
     }
+    public event EventHandler<EventArgs<float>> OnUpdateProgressListener;
+    #endregion
+
+
     // TODO zmienić value na int
     private Dictionary<Property.Type, Property> properties = new Dictionary<Property.Type, Property>() {
         { Property.Type.Humidity, new Property(Property.Type.Humidity) },
@@ -28,15 +42,19 @@ public class FarmField : ObservableMonoBehaviour, INetworkIdentity {
         { Property.Type.Acidity, new Property(Property.Type.Acidity) },
         { Property.Type.Pollution, new Property( Property.Type.Pollution) }
     };
-
     public void SetProperty(Property.Type id, int value) {
         if (properties.ContainsKey(id)) {
             properties[id].Level = value;
-            Notify(properties[id]);
+            // Notify subscribers
+            if (OnUpdatePropertyListener != null) {
+                OnUpdatePropertyListener.Invoke(this, new EventArgs<Property>() { Data = properties[id] });
+            }
         } else {
             print("Fail");
         }
     }
+    public event EventHandler<EventArgs<Property>> OnUpdatePropertyListener;
+
     public int GetLevel(Property.Type id) {
         return properties[id].Level;
     }
@@ -50,18 +68,20 @@ public class FarmField : ObservableMonoBehaviour, INetworkIdentity {
     }
 
     void Start() {
-        Progress = Random.Range(0F, 1F);
+        Progress = UnityEngine.Random.Range(0F, 1F);
         InvokeRepeating("Grow", 1F, progressRepeatTime);
     }
+
 
     private void Grow() {
         float updateProgress =
             Progress
             + (float) (properties[Property.Type.Fertylity].Level) / 70 // jakaś stała
             + (float) (properties[Property.Type.Humidity].Level) / 250 // jakaś stała
-            - (float) (properties[Property.Type.Pollution].Level) / 100; // jakaś stała
+            - (float) (properties[Property.Type.Pollution].Level) / 100 // jakaś stała
+            - (float) (properties[Property.Type.Acidity].Level) / 300;// jakaś stała
 
-        Progress = Mathf.Clamp(updateProgress, 0F, 1F);
+        Progress = Mathf.Clamp(updateProgress, 0F, 1F); // Clamp progress between 0 and 1
     }
     public void Harvest() {
         Progress = 0F;
@@ -71,6 +91,7 @@ public class FarmField : ObservableMonoBehaviour, INetworkIdentity {
     }
 
     public string GetTextRaport() {
+
         int x = (int) transform.position.x;
         int y = (int) transform.position.z;
 
