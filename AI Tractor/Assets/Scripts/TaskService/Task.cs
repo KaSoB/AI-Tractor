@@ -10,10 +10,6 @@ public abstract class Task {
         
     public State CurrentState { get; protected set; }
 
- //   protected Dictionary<KeyValuePair<State, Transition>, State> transitions = new Dictionary<KeyValuePair<State, Transition>, State>();
-
-    // Action<>
-   // Action<GameObject> GameAction = (x) => Debug.Log("Rozpoczęto grę!");
 
     protected GameObject subject;
     protected object goal;

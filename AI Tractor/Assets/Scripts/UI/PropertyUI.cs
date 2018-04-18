@@ -11,9 +11,9 @@ public class PropertyUI : MonoBehaviour {
     private Property.Type propertyType;
 
     [SerializeField]
-    private Sprite fillRectangleSprite; // TODO
+    private Sprite fillRectangleSprite;
     [SerializeField]
-    private Sprite blankRectangleSprite;// TODO
+    private Sprite blankRectangleSprite;
 
     private void Start() {
         GetComponentInChildren<Text>().text = propertyType.ToString().ToUpper();

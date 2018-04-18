@@ -19,7 +19,7 @@ namespace ServerService {
         const int MAX_CLIENTS = 5;
         public List<TcpClient> Clients { private set; get; }
 
-        public Server(IPAddress IPAddress, int port, int maxClients = 1) {
+        public Server(IPAddress IPAddress, int port) {
             Online = false;
             Port = port;
             IP_Adress = IPAddress;

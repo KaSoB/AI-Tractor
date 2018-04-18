@@ -32,7 +32,7 @@ public class Property {
     }
 
     private bool IsInRange(int level) {
-        return level >= 0 && level <= MAX_LEVEL;
+        return level >= 1 && level <= MAX_LEVEL;
     }
 
     public override string ToString() {
