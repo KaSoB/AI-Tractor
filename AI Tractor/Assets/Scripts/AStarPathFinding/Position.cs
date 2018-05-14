@@ -14,7 +14,7 @@ namespace Assets.Scripts.AStarPathFinding {
             return new Position { X = (int) vector.x, Y = (int) vector.z };
         }
         public override string ToString() {
-            return X.ToString() + " " + Y.ToString();
+            return X + " " + Y;
         }
     }
 }

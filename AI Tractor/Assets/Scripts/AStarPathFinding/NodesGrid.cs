@@ -20,19 +20,15 @@ public class NodesGrid : MonoBehaviour {
     }
 
     public Queue<Node> GetPath(Vector3 startPosition, Vector3 target) {
-        int xStart = (int) startPosition.x;
-        int yStart = (int) startPosition.z;
-        int xTarget = (int) target.x;
-        int yTarget = (int) target.z;
-        if (!IsInsideGrid(xStart, yStart) || !IsInsideGrid(xTarget, yTarget)) {
+        if (!IsInsideGrid(startPosition) || !IsInsideGrid(target)) {
             return null;
         }
-        Node startNode = nodes[xStart, yStart];
-        Node targetNode = nodes[xTarget, yTarget];
+        Node startNode = GetNode(startPosition);
+        Node targetNode = GetNode(target);
 
-        var s = moveNodes[xStart, yStart];
+        var s = GetMoveState(startPosition);
         s.Node = startNode;
-        var t = moveNodes[xTarget, yTarget];
+        var t = GetMoveState(target);
         t.Node = targetNode;
         var path = AStar.FindPath(this, s, t);
         foreach (var item in path) {
@@ -46,16 +42,16 @@ public class NodesGrid : MonoBehaviour {
             item.ClearScore();
         }
     }
-    public bool IsInsideGrid(int x, int y) {
-        return (x >= 0 && x < Width && y >= 0 && y < Height);
+    public bool IsInsideGrid(Position position) {
+        return (position.X >= 0 && position.X < Width && position.Y >= 0 && position.Y < Height);
     }
-    public bool IsWalkableNode(int x, int y) {
-        return nodes[x, y].Walkable;
+    public bool IsWalkableNode(Position position) {
+        return nodes[position.X, position.Y].Walkable;
     }
-    public Node GetNode(int x, int y) {
-        return nodes[x, y];
+    public Node GetNode(Position position) {
+        return nodes[position.X, position.Y];
     }
-    public MoveState GetMoveState(int x, int y) {
-        return moveNodes[x, y];
+    public MoveState GetMoveState(Position position) {
+        return moveNodes[position.X, position.Y];
     }
 }

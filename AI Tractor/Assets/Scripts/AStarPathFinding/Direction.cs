@@ -14,15 +14,14 @@ namespace Assets.Scripts.AStarPathFinding {
 
     public enum Direction {
         North = 0,
-        South = 4,
-        East = 6,
-        West = 2,
-        NorthEast = 7,
         NorthWest = 1,
-        SouthEast = 5,
+        West = 2,
         SouthWest = 3,
+        South = 4,
+        SouthEast = 5,
+        East = 6,
+        NorthEast = 7,
         Undefined = -1
-
     }
 }
 

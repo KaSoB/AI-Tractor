@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assets.Scripts.AStarPathFinding {
     public class MoveState : IComparable<MoveState>, IEquatable<MoveState> {
         public Node Node { get; set; }
         public Direction Direction { get; set; }
+
+        //tego tu nie powinno być :/ jest w Node
         public MoveState Parent { get; set; }
 
 
         public int CompareTo(MoveState other) {
-            if (Node.F_Score > other.Node.F_Score) {
-                return 1;
-            } else if (Node.F_Score == other.Node.F_Score && Node.H_Score > other.Node.H_Score) {
-                return 1;
-            } else {
-                return -1;
-            }
+            return Node.CompareTo(other.Node);
         }
 
         public static IEnumerable<Node> ToNodes(IEnumerable<MoveState> moveStates) {
-            List<Node> nodes = new List<Node>();
-            foreach (var item in moveStates) {
-                nodes.Add(item.Node);
-            }
-            return nodes;
+            return moveStates.Select(y => y.Node).ToList();
+
         }
 
         public bool Equals(MoveState other) {

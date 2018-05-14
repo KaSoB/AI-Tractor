@@ -52,11 +52,9 @@ namespace AStarPathFinding {
             List<MoveState> neighbours = new List<MoveState>();
             foreach (var item in NeighbourLocations) {
                 var tmp = node.Node.Position + item.Value;
-                if (grid.IsInsideGrid(tmp.X, tmp.Y)) {
-                    // TODO: negacja kierunku
-                    var p = grid.GetMoveState(tmp.X, tmp.Y);
-                    p.Direction = GlobalDirection.GetDirection(tmp, node.Node.Position);
-                    p.Node = grid.GetNode(tmp.X, tmp.Y);
+                if (grid.IsInsideGrid(tmp)) {
+                    var p = grid.GetMoveState(tmp);
+                    p.Node = grid.GetNode(tmp);
                     neighbours.Add(p);
                 }
             }
@@ -68,6 +66,10 @@ namespace AStarPathFinding {
             while (!currentNode.Equals(startNode)) {
                 currentNode.Node.IsCorrectPath = true;
                 path.Add(currentNode);
+                // kierunki tutaj
+                var fPoint = currentNode.Node.Position;
+                var lPoint = currentNode.Parent.Node.Position;
+                currentNode.Direction = GlobalDirection.GetDirection(fPoint, lPoint);
                 currentNode = currentNode.Parent;
             }
             path.Reverse();
@@ -80,7 +82,7 @@ namespace AStarPathFinding {
                 { Direction.SouthEast, new Position { X=1, Y=-1 } },
                 { Direction.South,  new Position { X=0, Y=-1 } },
                 { Direction.SouthWest, new Position { X=-1,Y=-1 } },
-                { Direction.West,  new Position { X=0, Y=-1 } },
+                { Direction.West,  new Position { X=-1, Y=0 } },
                 { Direction.NorthWest, new Position { X=-1, Y=1 } }
             };
         public static int GetDistance(Position position1, Position position2) {
