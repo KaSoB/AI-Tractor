@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.AStarPathFinding;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,20 +8,21 @@ namespace AStarPathFinding {
     /// Info: https://en.wikipedia.org/wiki/A*_search_algorithm
     /// </summary>
     public static class AStar {
-        public static IEnumerable<Node> FindPath(NodesGrid grid, Node startNode, Node targetNode) {
-            if (!startNode.Walkable || !targetNode.Walkable) {
+        public static IEnumerable<MoveState> FindPath(NodesGrid grid, MoveState startNode, MoveState targetNode) {
+            if (!startNode.Node.Walkable || !targetNode.Node.Walkable) {
                 return null;
             }
             grid.ClearScore();
 
-            List<Node> openSet = new List<Node>();
-            HashSet<Node> closedSet = new HashSet<Node>();
-            openSet.Add(startNode);
+            List<MoveState> openSet = new List<MoveState>() {
+                startNode
+            };
+            HashSet<MoveState> closedSet = new HashSet<MoveState>();
 
             while (openSet.Any()) {
-                Node currentNode = openSet.Min();
+                MoveState currentNode = openSet.Min();
 
-                if (currentNode == targetNode) {
+                if (currentNode.Equals(targetNode)) {
                     return ReconstructPath(startNode, targetNode);
                 }
 
@@ -28,17 +30,15 @@ namespace AStarPathFinding {
                 closedSet.Add(currentNode);
 
                 // znajdź wszystkich sąsiadów obecnego węzła, który jest przechodni i nie był wcześniej odwiedzany
-                foreach (Node neighbour in GetNeighbours(grid, currentNode).Where(it => it.Walkable && !closedSet.Contains(it))) {
+                foreach (MoveState neighbour in GetNeighbours(grid, currentNode).Where(it => it.Node.Walkable && !closedSet.Contains(it))) {
 
-                    int costToNeighbour = currentNode.G_Score + neighbour.Cost + GetDistance(currentNode.X, currentNode.Y, neighbour.X, neighbour.Y);
-                    if (costToNeighbour < neighbour.G_Score || !openSet.Contains(neighbour)) {
-                        neighbour.G_Score = costToNeighbour;
-                        neighbour.H_Score = GetDistance(neighbour.X, neighbour.Y, targetNode.X, targetNode.Y);
+                    int costToNeighbour = currentNode.Node.G_Score + neighbour.Node.Cost + GetDistance(currentNode.Node.Position, neighbour.Node.Position);
+                    if (costToNeighbour < neighbour.Node.G_Score || !openSet.Contains(neighbour)) {
+                        neighbour.Node.G_Score = costToNeighbour;
+                        neighbour.Node.H_Score = GetDistance(neighbour.Node.Position, targetNode.Node.Position);
                         neighbour.Parent = currentNode;
 
                         if (!openSet.Contains(neighbour)) {
-                            // Tutaj sprawdzam kąt
-                            Debug.Log(currentNode.X + " " + currentNode.Y + " " + neighbour.X + " " + neighbour.Y + " " + Vector2.Angle(new Vector2(currentNode.X, currentNode.Y), new Vector2(neighbour.X, neighbour.Y)));
                             openSet.Add(neighbour);
                         }
 
@@ -48,50 +48,46 @@ namespace AStarPathFinding {
             return null;
         }
 
-        private static IEnumerable<Node> GetNeighbours(NodesGrid grid, Node node) {
-            List<Node> neighbours = new List<Node>();
-            for (int x = -1 ; x <= 1 ; x++) {
-                for (int y = -1 ; y <= 1 ; y++) {
-                    if (x == 0 && y == 0)
-                        continue;
-
-                    int checkX = node.X + x;
-                    int checkY = node.Y + y;
-                    if (grid.IsInsideGrid(checkX, checkY)) {
-                        neighbours.Add(grid.GetNode(checkX, checkY));
-                    }
+        private static IEnumerable<MoveState> GetNeighbours(NodesGrid grid, MoveState node) {
+            List<MoveState> neighbours = new List<MoveState>();
+            foreach (var item in NeighbourLocations) {
+                var tmp = node.Node.Position + item.Value;
+                if (grid.IsInsideGrid(tmp.X, tmp.Y)) {
+                    // TODO: negacja kierunku
+                    var p = grid.GetMoveState(tmp.X, tmp.Y);
+                    p.Direction = GlobalDirection.GetDirection(tmp, node.Node.Position);
+                    p.Node = grid.GetNode(tmp.X, tmp.Y);
+                    neighbours.Add(p);
                 }
             }
-
             return neighbours;
         }
-
-        private static IEnumerable<Node> ReconstructPath(Node startNode, Node targetNode) {
-            List<Node> path = new List<Node>();
-            Node currentNode = targetNode;
-            while (currentNode != startNode) {
-                currentNode.IsCorrectPath = true;
+        private static IEnumerable<MoveState> ReconstructPath(MoveState startNode, MoveState targetNode) {
+            List<MoveState> path = new List<MoveState>();
+            MoveState currentNode = targetNode;
+            while (!currentNode.Equals(startNode)) {
+                currentNode.Node.IsCorrectPath = true;
                 path.Add(currentNode);
                 currentNode = currentNode.Parent;
             }
             path.Reverse();
             return path;
         }
-
-        public static int GetDistance(int x1, int y1, int x2, int y2) {
-            int dstX = Mathf.Abs(x1 - x2);
-            int dstY = Mathf.Abs(y1 - y2);
+        public static Dictionary<Direction, Position> NeighbourLocations = new Dictionary<Direction, Position>() {
+                { Direction.North,  new Position { X=0, Y=1 } },
+                { Direction.NorthEast, new Position { X=1, Y=1 } },
+                { Direction.East,  new Position { X=1, Y=0 } },
+                { Direction.SouthEast, new Position { X=1, Y=-1 } },
+                { Direction.South,  new Position { X=0, Y=-1 } },
+                { Direction.SouthWest, new Position { X=-1,Y=-1 } },
+                { Direction.West,  new Position { X=0, Y=-1 } },
+                { Direction.NorthWest, new Position { X=-1, Y=1 } }
+            };
+        public static int GetDistance(Position position1, Position position2) {
+            int dstX = Mathf.Abs(position1.X - position2.X);
+            int dstY = Mathf.Abs(position1.Y - position2.Y);
 
             return (dstX > dstY) ? 14 * dstY + 10 * (dstX - dstY) : 14 * dstX + 10 * (dstY - dstX);
-        }
-
-
-        public class MoveState {
-            public Node Node { get; set; }
-            public Direction Direction { get; set; }
-        }
-        public enum Direction {
-            N = 0, NE = 45, E = 90, SE = 135, S = 180, SW = 225, W = 270, NW = 315
         }
     }
 }

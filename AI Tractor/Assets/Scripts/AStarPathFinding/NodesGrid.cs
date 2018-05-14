@@ -1,5 +1,5 @@
-﻿using AStarPathFinding;
-using System.Collections;
+﻿using Assets.Scripts.AStarPathFinding;
+using AStarPathFinding;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,13 +8,15 @@ public class NodesGrid : MonoBehaviour {
     private Node[,] nodes;
     public int Width { get; set; }
     public int Height { get; set; }
-
+    private MoveState[,] moveNodes; // TODO: do pliku Astar
     void Start() {
         List<Node> tmpNodes = GameObject.FindGameObjectsWithTag("Node").Select(x => x.GetComponent<Node>()).ToList();
-        Width = tmpNodes.Max(it => it.X) + 1;
-        Height = tmpNodes.Max(it => it.Y) + 1;
+        Width = tmpNodes.Max(it => it.Position.X) + 1;
+        Height = tmpNodes.Max(it => it.Position.Y) + 1;
         nodes = new Node[Width, Height];
-        tmpNodes.ForEach(item => nodes[item.X, item.Y] = item);
+        moveNodes = new MoveState[Width, Height];
+        tmpNodes.ForEach(item => nodes[item.Position.X, item.Position.Y] = item);
+        tmpNodes.ForEach(item => moveNodes[item.Position.X, item.Position.Y] = new MoveState() { Node = item, Direction = Direction.Undefined });
     }
 
     public Queue<Node> GetPath(Vector3 startPosition, Vector3 target) {
@@ -22,12 +24,21 @@ public class NodesGrid : MonoBehaviour {
         int yStart = (int) startPosition.z;
         int xTarget = (int) target.x;
         int yTarget = (int) target.z;
-        if (!IsInsideGrid(xStart,yStart) || !IsInsideGrid(xTarget,yTarget)) {
+        if (!IsInsideGrid(xStart, yStart) || !IsInsideGrid(xTarget, yTarget)) {
             return null;
         }
-        Node startNode = nodes[xStart,yStart]; 
+        Node startNode = nodes[xStart, yStart];
         Node targetNode = nodes[xTarget, yTarget];
-        return new Queue<Node>(AStar.FindPath(this, startNode, targetNode));
+
+        var s = moveNodes[xStart, yStart];
+        s.Node = startNode;
+        var t = moveNodes[xTarget, yTarget];
+        t.Node = targetNode;
+        var path = AStar.FindPath(this, s, t);
+        foreach (var item in path) {
+            Debug.Log(item.Node.Position.ToString() + " " + item.Direction);
+        }
+        return new Queue<Node>(MoveState.ToNodes(path));
     }
 
     public void ClearScore() {
@@ -43,5 +54,8 @@ public class NodesGrid : MonoBehaviour {
     }
     public Node GetNode(int x, int y) {
         return nodes[x, y];
+    }
+    public MoveState GetMoveState(int x, int y) {
+        return moveNodes[x, y];
     }
 }
