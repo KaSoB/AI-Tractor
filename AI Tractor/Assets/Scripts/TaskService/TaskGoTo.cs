@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,8 +8,7 @@ public class TaskGoTo : Task {
 
     private Queue<Node> path = new Queue<Node>();
     private Node currentTargetNode = null;
-    
-    public TaskGoTo(object goal) : base(goal) {
+    public TaskGoTo(GameObject subject, object goal) : base(subject, goal) {
         grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<NodesGrid>();
         agent = subject.GetComponent<NavMeshAgent>();
     }
@@ -28,12 +24,6 @@ public class TaskGoTo : Task {
         return Vector3.Distance(subject.transform.position, (Vector3) goal) < 0.1F;
     }
 
-    public override void Execute(GameObject subject) {
-        throw new NotImplementedException();
-    }
 
-    public override void Update() {
-        throw new NotImplementedException();
-    }
 }
 

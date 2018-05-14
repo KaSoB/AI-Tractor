@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class FarmSimulator : MonoBehaviour {
     private List<FarmField> farmLand = new List<FarmField>();
-    private float updateTime = 3.0F;
+    private float updateTime = 5.0F;
 
     void Start() {
         farmLand = GameObject.FindGameObjectsWithTag("FarmField").Select(y => y.GetComponent<FarmField>()).ToList();
@@ -32,9 +31,13 @@ public class FarmSimulator : MonoBehaviour {
         bool increaseLevel = Random.value > 0.5F; // Random boolean
         level += increaseLevel ? 1 : -1;
 
-        farmField.SetProperty(randomPropertyType, level);
+        if (farmField.GetProperty(randomPropertyType).IsInRange(level)) {
+            farmField.SetProperty(randomPropertyType, level);
+            Debug.Log(string.Format("Pole {0} ma nową wartość ({2}) we właściwości {1}", farmField.gameObject.name, randomPropertyType, level));
+        } else {
+            Debug.Log(string.Format("Pole {0} nie mogło otrzymać wartości ({2}) we właściwości {1}", farmField.gameObject.name, randomPropertyType, level));
 
-        Debug.Log(string.Format("Pole {0} ma nową wartość ({2}) we właściwości {1}", farmField.gameObject.name, randomPropertyType, level));
+        }
     }
 
 }

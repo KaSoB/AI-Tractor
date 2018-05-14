@@ -1,7 +1,5 @@
 ﻿using ServerService;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -12,7 +10,7 @@ public interface INetworkIdentity {
     string GetTextRaport();
 }
 public interface INetworkController : INetworkIdentity { // todo name
-    TaskManager TaskManager { get; }
+                                                         // Task Task { get; }
 }
 
 public class NetworkController : MonoBehaviour {
@@ -114,8 +112,8 @@ public class NetworkController : MonoBehaviour {
                 int x = int.Parse(parameters[1]);
                 int y = int.Parse(parameters[2]);
                 var vect = new Vector3(x, 0, y);
-              //  agents.ForEach(c => c.TaskManager.AddTask(new TaskGoTo(, vect)));
-               // agents[int.Parse(parameters[0])].TaskManager.AddTask(new TaskGoTo((GameObject)))
+                //  agents.ForEach(c => c.TaskManager.AddTask(new TaskGoTo(, vect)));
+                // agents[int.Parse(parameters[0])].TaskManager.AddTask(new TaskGoTo((GameObject)))
                 break;
             default:
                 break;

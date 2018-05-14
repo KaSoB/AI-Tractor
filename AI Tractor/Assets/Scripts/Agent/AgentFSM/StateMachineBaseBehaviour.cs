@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
 abstract public class StateMachineBaseBehaviour : StateMachineBehaviour {
-    protected GameObject tractorGameObject;
+    protected GameObject subjectGameObject;
     protected Agent agent;
     protected bool hasFinished;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex) {
-        tractorGameObject = animator.gameObject;
-        agent = tractorGameObject.GetComponent<Agent>();
+        subjectGameObject = animator.gameObject;
+        agent = subjectGameObject.GetComponent<Agent>();
     }
 
 }

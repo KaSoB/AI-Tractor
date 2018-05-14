@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class TaskManager {
-    public enum PriorityLevel { High, Normal, Low }
-    public List<KeyValuePair<PriorityLevel,Task>> Tasks { get; private set; }
     public Task CurrentTask { get; private set; }
 
-    public TaskManager() {
-        Tasks = new List<KeyValuePair<PriorityLevel,Task>>();
+    public enum TaskType {
+        GoTo,
+        Scan
     }
-    public void AddTask(Task task, PriorityLevel priorityLevel) {
-        Tasks.Add(new KeyValuePair<PriorityLevel, Task>(priorityLevel,task));
+    private Dictionary<TaskType, Task> myTasks;
+
+    public TaskManager() {
+        //Tasks = new Task();
+    }
+    public void AddTask(TaskType taskType, Task task) {
+        if (!myTasks.ContainsKey(taskType)) {
+            myTasks.Add(taskType, task);
+        }
     }
     public bool HasTask() {
-        return Tasks.Any();
+        return true;//return Tasks.Any();
     }
-    public void GetNewTask() {
-       // CurrentTask = Tasks();
+    public void SetCurrentTask() {
+        // CurrentTask = Tasks();
     }
 }

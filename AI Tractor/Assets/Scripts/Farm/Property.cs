@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Property {
     public const int INIT_LEVEL = 3;
@@ -31,7 +27,7 @@ public class Property {
         Level = initLevel;
     }
 
-    private bool IsInRange(int level) {
+    public bool IsInRange(int level) {
         return level >= 1 && level <= MAX_LEVEL;
     }
 

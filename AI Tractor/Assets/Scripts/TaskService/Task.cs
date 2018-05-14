@@ -1,24 +1,42 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class Task {
-    public enum State { Entry, Preparing, Working, Completed, Suspended, Blocked}
-    public enum Transition { Start, Work, Finish, Interrupt, Block }
-        
-    public State CurrentState { get; protected set; }
-
-
+public abstract class Task : MonoBehaviour {
     protected GameObject subject;
     protected object goal;
+    protected StateMachine<State> fsm;
 
-    public Task(object goal = null) {
-        this.goal = goal;
-        CurrentState = State.Entry;
+    public enum State {
+        Init,
+        Start,
+        Execute,
+        Finish,
+        Interrupt
     }
 
-    public abstract void Execute(GameObject subject);
-    public abstract void Update();
+    public Task(GameObject subject, object goal = null) {
+        this.subject = subject;
+        this.goal = goal;
+    }
+
+    virtual protected void Init_Enter() { }
+    virtual protected void Init_Update() { }
+    virtual protected void Init_Exit() { }
+
+    virtual protected void Start_Enter() { }
+    virtual protected void Start_Update() { }
+    virtual protected void Start_Exit() { }
+
+    virtual protected void Execute_Enter() { }
+    virtual protected void Execute_Update() { }
+    virtual protected void Execute_Exit() { }
+
+    virtual protected void Finish_Enter() { }
+    virtual protected void Finish_Update() { }
+    virtual protected void Finish_Exit() { }
+
+    virtual protected void Interrupt_Enter() { }
+    virtual protected void Interrupt_Update() { }
+    virtual protected void Interrupt_Exit() { }
+
 }
+

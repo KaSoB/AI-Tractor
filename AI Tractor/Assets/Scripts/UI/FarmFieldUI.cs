@@ -25,7 +25,7 @@ public class FarmFieldUI : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)) {
             ClickToSelectObject();
         }
-        // Escape
+        // Escape key
         if (Input.GetKeyDown(KeyCode.Escape) && panel.activeSelf) {
             Close();
         }
@@ -36,7 +36,7 @@ public class FarmFieldUI : MonoBehaviour {
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
             var selectedObject = hit.transform.gameObject.GetComponent<FarmField>();
             if (selectedObject != null) {
-                RemoveEvents();
+                ClearEvents();
                 subject = selectedObject;
                 panel.SetActive(true); // Show Panel
                 AddEvents(subject);
@@ -45,12 +45,12 @@ public class FarmFieldUI : MonoBehaviour {
         }
     }
     private void Close() {
-        RemoveEvents();
+        ClearEvents();
         panel.SetActive(false); // Hide Panel
     }
 
     private void OnUpdateProgress(object sender, EventArgs<float> e) {
-        percentageOfCompletion.text = String.Format("{0:P2}", e.Data);
+        SetProgress(e.Data);
     }
     private void OnUpdateProperty(object sender, EventArgs<Property> e) {
         UpdateProperty(e.Data);
@@ -59,7 +59,7 @@ public class FarmFieldUI : MonoBehaviour {
         subject.OnUpdateProgressListener += OnUpdateProgress;
         subject.OnUpdatePropertyListener += OnUpdateProperty;
     }
-    private void RemoveEvents() {
+    private void ClearEvents() {
         if (subject != null) {
             subject.OnUpdateProgressListener -= OnUpdateProgress;
             subject.OnUpdatePropertyListener -= OnUpdateProperty;

@@ -39,7 +39,6 @@ GameObject:
   - component: {fileID: 195512854047342266}
   - component: {fileID: 114059279782861488}
   - component: {fileID: 95797193015245604}
-  - component: {fileID: 114860699054541304}
   m_Layer: 0
   m_Name: AgentFTM
   m_TagString: AI
@@ -269,11 +268,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1149621882798982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 0, z: 0}
+  m_LocalPosition: {x: 6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4517352393457994}
   - {fileID: 4868008832598816}
+  - {fileID: 4517352393457994}
   - {fileID: 4353817634135408}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -308,7 +307,7 @@ Transform:
   - {fileID: 4000213516296322}
   - {fileID: 4195393038918820}
   m_Father: {fileID: 4315020958045122}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4631178552508404
 Transform:
@@ -335,7 +334,7 @@ Transform:
   m_Children:
   - {fileID: 4631178552508404}
   m_Father: {fileID: 4315020958045122}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4943485815204500
 Transform:
@@ -701,22 +700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f547df9e84909d479cd10366b33b780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114860699054541304
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1149621882798982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db236ba60500d7b4c984fd3c97a19734, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  obje: {fileID: 0}
+  findobje: 0
 --- !u!195 &195512854047342266
 NavMeshAgent:
   m_ObjectHideFlags: 1

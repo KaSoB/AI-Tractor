@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Harvest : StateMachineBaseBehaviour {
 
@@ -20,6 +18,7 @@ public class Harvest : StateMachineBaseBehaviour {
             agent.obje.Harvest();
             agent.findobje = false;
             animator.SetBool("Harvest", false);
+            animator.SetBool("Scan", false);
         }
     }
 

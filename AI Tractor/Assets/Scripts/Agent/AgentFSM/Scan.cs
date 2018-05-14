@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Scan : StateMachineBaseBehaviour {
 
@@ -14,19 +12,19 @@ public class Scan : StateMachineBaseBehaviour {
         if (hasFinished) {
             return;
         }
-
-        agent.Scan();
         hasFinished = true;
+        agent.Scan();
+
         if (agent.findobje) {
             animator.SetBool("Harvest", true);
         } else {
             animator.SetBool("Scan", false);
         }
-       
+
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateExit(animator, stateInfo, layerIndex);
-       
+
     }
 }

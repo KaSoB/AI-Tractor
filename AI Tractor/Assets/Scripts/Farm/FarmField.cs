@@ -1,8 +1,6 @@
 ﻿using AStarPathFinding;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 
 
@@ -74,6 +72,11 @@ public class FarmField : MonoBehaviour, INetworkIdentity {
 
 
     private void Grow() {
+        if (properties[Property.Type.Fertylity].Level == 1) {
+            return;
+        }
+
+
         float updateProgress =
             Progress
             + (float) (properties[Property.Type.Fertylity].Level) / 70 // jakaś stała
