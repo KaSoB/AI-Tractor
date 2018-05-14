@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace AStarPathFinding {
@@ -38,8 +36,12 @@ namespace AStarPathFinding {
                         neighbour.H_Score = GetDistance(neighbour.X, neighbour.Y, targetNode.X, targetNode.Y);
                         neighbour.Parent = currentNode;
 
-                        if (!openSet.Contains(neighbour))
+                        if (!openSet.Contains(neighbour)) {
+                            // Tutaj sprawdzam kąt
+                            Debug.Log(currentNode.X + " " + currentNode.Y + " " + neighbour.X + " " + neighbour.Y + " " + Vector2.Angle(new Vector2(currentNode.X, currentNode.Y), new Vector2(neighbour.X, neighbour.Y)));
                             openSet.Add(neighbour);
+                        }
+
                     }
                 }
             }
@@ -64,7 +66,7 @@ namespace AStarPathFinding {
             return neighbours;
         }
 
-        private static IEnumerable<Node> ReconstructPath(Node startNode, Node targetNode){
+        private static IEnumerable<Node> ReconstructPath(Node startNode, Node targetNode) {
             List<Node> path = new List<Node>();
             Node currentNode = targetNode;
             while (currentNode != startNode) {
@@ -81,6 +83,15 @@ namespace AStarPathFinding {
             int dstY = Mathf.Abs(y1 - y2);
 
             return (dstX > dstY) ? 14 * dstY + 10 * (dstX - dstY) : 14 * dstX + 10 * (dstY - dstX);
+        }
+
+
+        public class MoveState {
+            public Node Node { get; set; }
+            public Direction Direction { get; set; }
+        }
+        public enum Direction {
+            N = 0, NE = 45, E = 90, SE = 135, S = 180, SW = 225, W = 270, NW = 315
         }
     }
 }
