@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 195512854047342266}
   - component: {fileID: 114059279782861488}
   - component: {fileID: 95797193015245604}
+  - component: {fileID: 114409479105029644}
   m_Layer: 0
   m_Name: AgentFTM
   m_TagString: AI
@@ -533,7 +534,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: cdcec2345c1d1af4da10b1c5d9cbff65, type: 2}
+  - {fileID: 2100000, guid: 908f79db1817ef145aa1effae23404cb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -662,7 +663,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 0.834, g: 0.18382353, b: 0.18382353, a: 1}
+  m_Color: {r: 0.034482718, g: 1, b: 0, a: 1}
   m_Intensity: 1
   m_Range: 2
   m_SpotAngle: 30
@@ -700,8 +701,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f547df9e84909d479cd10366b33b780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPosition: {x: 0, y: 0, z: 0}
   obje: {fileID: 0}
   findobje: 0
+--- !u!114 &114409479105029644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1149621882798982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6940985b0f87e94ebc670600834ff0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fertilizerText: {fileID: 0}
+  waterText: {fileID: 0}
+  pesticidesText: {fileID: 0}
+  soilText: {fileID: 0}
 --- !u!195 &195512854047342266
 NavMeshAgent:
   m_ObjectHideFlags: 1

@@ -6,10 +6,12 @@ public class TaskScan : Task {
     public List<FarmField> FarmField { get; set; }
     public int Radius { get; set; }
 
-    public TaskScan(GameObject subject, object goal, int radius) : base(subject, goal) {
+    public TaskScan(GameObject subject, object goal, int radius) : base(goal) {
         Radius = radius;
-        fsm = StateMachine<State>.Initialize(this);
+
     }
+  
+
     protected override void Init_Enter() {
         Debug.Log("Init_Enter");
     }

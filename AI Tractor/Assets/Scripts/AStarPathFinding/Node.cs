@@ -1,14 +1,11 @@
-﻿using AStarPathFinding;
+﻿using Assets.Scripts.AStarPathFinding;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 public class Node : MonoBehaviour, IComparable<Node> {
     [SerializeField]
-    private bool walkable; 
+    private bool walkable;
     public bool Walkable {
         get { return walkable; }
     }
@@ -23,10 +20,7 @@ public class Node : MonoBehaviour, IComparable<Node> {
     [SerializeField]
     private bool showInfoInEditMode;
 
-    public bool IsCorrectPath { get; set; }
-
-    public int X { get; set; }
-    public int Y { get; set; }
+    public Position Position { get; set; }
 
     public Node Parent { get; set; }
 
@@ -37,14 +31,13 @@ public class Node : MonoBehaviour, IComparable<Node> {
     }
 
     private void Awake() {
-        X = (int) transform.position.x;
-        Y = (int) transform.position.z;  // w 3D component Z odpowiednikiem componentu Y w 2D
+        Position = transform.position;
+
     }
 
     public void ClearScore() {
         G_Score = 0;
         H_Score = 0;
-        IsCorrectPath = false;
         Parent = null;
     }
 
@@ -59,7 +52,6 @@ public class Node : MonoBehaviour, IComparable<Node> {
         Handles.Label(transform.position + Vector3.up / 3, (Walkable ? string.Format("(C: {0} G: {1} H: {2})", Cost, G_Score, H_Score) : "F"), guiStyle);
 
         if (Parent != null) {
-            Gizmos.color = IsCorrectPath ? Color.green : Color.white;
             Gizmos.DrawLine(transform.position, Parent.transform.position);
         }
     }

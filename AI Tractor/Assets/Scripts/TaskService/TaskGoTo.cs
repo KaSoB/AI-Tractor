@@ -8,7 +8,7 @@ public class TaskGoTo : Task {
 
     private Queue<Node> path = new Queue<Node>();
     private Node currentTargetNode = null;
-    public TaskGoTo(GameObject subject, object goal) : base(subject, goal) {
+    public TaskGoTo(GameObject subject, object goal) : base(goal) {
         grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<NodesGrid>();
         agent = subject.GetComponent<NavMeshAgent>();
     }

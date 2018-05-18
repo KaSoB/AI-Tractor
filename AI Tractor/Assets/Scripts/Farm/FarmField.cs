@@ -99,11 +99,9 @@ public class FarmField : MonoBehaviour, INetworkIdentity {
         int y = (int) transform.position.z;
 
         var playerPosition = GameObject.FindGameObjectWithTag("AI").transform.position;
-        int playerX = (int) playerPosition.x;
-        int playerY = (int) playerPosition.z;
 
         return string.Format("{0} {1} {2} {3} {4} {5}",
-            name, fieldType, (Progress / 1F).ToString("0.##"), x, y, AStar.GetDistance(x, y, playerX, playerY));
+            name, fieldType, (Progress / 1F).ToString("0.##"), x, y, AStar.GetDistance(transform.position, playerPosition));
     }
 }
 
