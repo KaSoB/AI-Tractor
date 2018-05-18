@@ -7,9 +7,9 @@ namespace Assets.Scripts.AStarPathFinding {
         public Node Node { get; set; }
         public Direction Direction { get; set; }
 
-        //tego tu nie powinno być :/ jest w Node
-        public MoveState Parent { get; set; }
+        public string Action { get; set; }
 
+        public MoveState Parent { get; set; }  //tego tu nie powinno być :/ jest w Node
 
         public int CompareTo(MoveState other) {
             return Node.CompareTo(other.Node);
@@ -22,6 +22,14 @@ namespace Assets.Scripts.AStarPathFinding {
 
         public bool Equals(MoveState other) {
             return Node == other.Node;
+        }
+        public static string SetAction(Direction currentDirection, Direction targetDirection) {
+            // TODO: REFACTORING!
+            if (currentDirection == targetDirection) {
+                return "Prosto";
+            } else {
+                return targetDirection.ToString();
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ public class ClickToMove : MonoBehaviour {
 
     void Update() {
         // Right click
-     
+
         if (Input.GetMouseButtonDown(1)) {
             RaycastHit hit;
 

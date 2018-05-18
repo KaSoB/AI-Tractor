@@ -20,8 +20,6 @@ public class Node : MonoBehaviour, IComparable<Node> {
     [SerializeField]
     private bool showInfoInEditMode;
 
-    public bool IsCorrectPath { get; set; }
-
     public Position Position { get; set; }
 
     public Node Parent { get; set; }
@@ -40,7 +38,6 @@ public class Node : MonoBehaviour, IComparable<Node> {
     public void ClearScore() {
         G_Score = 0;
         H_Score = 0;
-        IsCorrectPath = false;
         Parent = null;
     }
 
@@ -55,7 +52,6 @@ public class Node : MonoBehaviour, IComparable<Node> {
         Handles.Label(transform.position + Vector3.up / 3, (Walkable ? string.Format("(C: {0} G: {1} H: {2})", Cost, G_Score, H_Score) : "F"), guiStyle);
 
         if (Parent != null) {
-            Gizmos.color = IsCorrectPath ? Color.green : Color.white;
             Gizmos.DrawLine(transform.position, Parent.transform.position);
         }
     }

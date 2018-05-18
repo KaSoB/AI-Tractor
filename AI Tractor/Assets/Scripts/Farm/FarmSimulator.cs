@@ -33,9 +33,9 @@ public class FarmSimulator : MonoBehaviour {
 
         if (farmField.GetProperty(randomPropertyType).IsInRange(level)) {
             farmField.SetProperty(randomPropertyType, level);
-            Debug.Log(string.Format("Pole {0} ma nową wartość ({2}) we właściwości {1}", farmField.gameObject.name, randomPropertyType, level));
+            //  Debug.Log(string.Format("Pole {0} ma nową wartość ({2}) we właściwości {1}", farmField.gameObject.name, randomPropertyType, level));
         } else {
-            Debug.Log(string.Format("Pole {0} nie mogło otrzymać wartości ({2}) we właściwości {1}", farmField.gameObject.name, randomPropertyType, level));
+            //  Debug.Log(string.Format("Pole {0} nie mogło otrzymać wartości ({2}) we właściwości {1}", farmField.gameObject.name, randomPropertyType, level));
 
         }
     }

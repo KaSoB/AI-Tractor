@@ -12,6 +12,8 @@ namespace AStarPathFinding {
             if (!startNode.Node.Walkable || !targetNode.Node.Walkable) {
                 return null;
             }
+
+
             grid.ClearScore();
 
             List<MoveState> openSet = new List<MoveState>() {
@@ -50,12 +52,12 @@ namespace AStarPathFinding {
 
         private static IEnumerable<MoveState> GetNeighbours(NodesGrid grid, MoveState node) {
             List<MoveState> neighbours = new List<MoveState>();
-            foreach (var item in NeighbourLocations) {
-                var tmp = node.Node.Position + item.Value;
-                if (grid.IsInsideGrid(tmp)) {
-                    var p = grid.GetMoveState(tmp);
-                    p.Node = grid.GetNode(tmp);
-                    neighbours.Add(p);
+            foreach (var location in NeighbourLocations) {
+                var neighboursPosition = node.Node.Position + location.Value;
+                if (grid.IsInsideGrid(neighboursPosition)) {
+                    var state = grid.GetMoveState(neighboursPosition);
+                    state.Node = grid.GetNode(neighboursPosition);
+                    neighbours.Add(state);
                 }
             }
             return neighbours;
@@ -63,14 +65,19 @@ namespace AStarPathFinding {
         private static IEnumerable<MoveState> ReconstructPath(MoveState startNode, MoveState targetNode) {
             List<MoveState> path = new List<MoveState>();
             MoveState currentNode = targetNode;
+            Direction currentDirection = Direction.North;
             while (!currentNode.Equals(startNode)) {
-                currentNode.Node.IsCorrectPath = true;
+                // Dodaj do ścieżki
                 path.Add(currentNode);
-                // kierunki tutaj
-                var fPoint = currentNode.Node.Position;
-                var lPoint = currentNode.Parent.Node.Position;
-                currentNode.Direction = GlobalDirection.GetDirection(fPoint, lPoint);
+                // Ustaw kierunek
+                currentNode.Direction = GlobalDirection.GetDirection(currentNode.Node.Position, currentNode.Parent.Node.Position);
+                // Ustaw akcje
+                currentNode.Action = MoveState.SetAction(currentDirection, currentNode.Direction);
+                // Odśwież obecny kierunek dla następnej pętli
+                currentDirection = currentNode.Direction;
+
                 currentNode = currentNode.Parent;
+
             }
             path.Reverse();
             return path;

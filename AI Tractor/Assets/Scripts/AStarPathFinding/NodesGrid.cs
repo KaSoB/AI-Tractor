@@ -32,7 +32,7 @@ public class NodesGrid : MonoBehaviour {
         t.Node = targetNode;
         var path = AStar.FindPath(this, s, t);
         foreach (var item in path) {
-            Debug.Log(item.Node.Position.ToString() + " " + item.Direction);
+            Debug.Log(item.Node.Position.ToString() + " " + item.Direction + " " + item.Action);
         }
         return new Queue<Node>(MoveState.ToNodes(path));
     }

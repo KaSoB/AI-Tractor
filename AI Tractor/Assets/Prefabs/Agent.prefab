@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 195828455298598546}
   - component: {fileID: 114447286920496168}
   - component: {fileID: 114088753874084534}
+  - component: {fileID: 114694560545988980}
   m_Layer: 0
   m_Name: Agent
   m_TagString: AI
@@ -683,6 +684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f547df9e84909d479cd10366b33b780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPosition: {x: 0, y: 0, z: 0}
   obje: {fileID: 0}
   findobje: 0
 --- !u!114 &114447286920496168
@@ -696,6 +698,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c33387be95adee7409e7623ced43222c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114694560545988980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1488190130113784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6940985b0f87e94ebc670600834ff0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 0}
+  fertilizerText: {fileID: 0}
+  waterText: {fileID: 0}
+  pesticidesText: {fileID: 0}
+  soilText: {fileID: 0}
 --- !u!195 &195828455298598546
 NavMeshAgent:
   m_ObjectHideFlags: 1
