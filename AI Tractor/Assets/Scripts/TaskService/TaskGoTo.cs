@@ -1,29 +1,66 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class TaskGoTo : Task {
-    private NodesGrid grid;
-    private NavMeshAgent agent;
+    public NavMeshAgent NavMeshAgent { get; set; }
+    public Vector3 Destination { get; set; } // cel na mapie
 
-    private Queue<Node> path = new Queue<Node>();
-    private Node currentTargetNode = null;
-    public TaskGoTo(GameObject subject, object goal) : base(goal) {
-        grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<NodesGrid>();
-        agent = subject.GetComponent<NavMeshAgent>();
+    private Vector3 target; // aktualny cel agenta
+    private Node currentTargetNode = null; // obecny node
+
+    private Queue<Node> path = new Queue<Node>(); // sciezka uzyskana z Grid
+
+    private bool IsReachedTarget() {
+        return Vector3.Distance(Subject.transform.position, target) < 0.15F;
+    }
+    private bool IsReachedDestination() {
+        return Vector3.Distance(Subject.transform.position, Destination) < 0.15F;
     }
 
-    private void SetDestinationToNavMeshAgent() {
-        currentTargetNode = path.Dequeue();
-        agent.destination = new Vector3(currentTargetNode.transform.position.x, 0, currentTargetNode.transform.position.z);
+    public void GoTo() {
+        path = GameObject
+            .FindGameObjectWithTag("Grid")
+            .GetComponent<NodesGrid>()
+            .GetPath(Subject.transform.position, Destination);
+
+        if (path == null) {
+            Debug.Log("Nie znalazłem ścieżki do " + Destination);
+        }
     }
-    private bool IsReachedNode() {
-        return Vector3.Distance(subject.transform.position, currentTargetNode.transform.position) < 0.1F;
+
+    public void Init_Enter() {
+        path.Clear();
+
     }
-    private bool IsReachedGoal() {
-        return Vector3.Distance(subject.transform.position, (Vector3) goal) < 0.1F;
+
+    public void Start_Update() {
+        GoTo();
+        if (path.Any()) {
+            currentTargetNode = path.Dequeue();
+            var point = currentTargetNode.transform.position;
+            target = new Vector3(point.x, 0, point.z);
+            NavMeshAgent.destination = target;
+            FSM.ChangeState(State.Execute);
+        }
+
+    }
+
+    public void Execute_Update() {
+        if (path.Any() && IsReachedTarget()) {
+            currentTargetNode = path.Dequeue();
+            var point = currentTargetNode.transform.position;
+            target = new Vector3(point.x, 0, point.z);
+            NavMeshAgent.destination = target;
+        } else if (!path.Any() && IsReachedDestination()) {
+            FSM.ChangeState(State.Finish);
+        }
     }
 
 
+    public void Finish_Enter() {
+        Debug.Log("Koniec drogi...");
+    }
 }
 

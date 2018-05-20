@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Agent : MonoBehaviour, INetworkController {
-    public TaskManager TaskManager { get; set; }
+
     public Vector3 startPosition;
     private NavMeshAgent agent;
     private Queue<Node> path = new Queue<Node>();
@@ -14,13 +14,12 @@ public class Agent : MonoBehaviour, INetworkController {
     public FarmField obje;
     public bool findobje = false;
     // --
-    TaskTest task;
-    private void Start() {
 
+    public TaskManager TaskManager = new TaskManager();
+    private void Start() {
         agent = GetComponent<NavMeshAgent>();
         target = transform.position;
         startPosition = transform.position;
-        task = GetComponent<TaskTest>();
 
     }
 
@@ -36,13 +35,9 @@ public class Agent : MonoBehaviour, INetworkController {
 
     }
 
-
-
     public bool IsReachedTarget() {
         return Vector3.Distance(transform.position, target) < 0.1F;
     }
-
-
 
     public void Scan() {
         foreach (var item in Physics.OverlapSphere(transform.position, 3F).Where(y => y.tag == "FarmField").Select(it => it.gameObject.GetComponent<FarmField>())) {
@@ -55,6 +50,7 @@ public class Agent : MonoBehaviour, INetworkController {
 
         }
     }
+
     public void GoTo(Vector3 destination) {
         path.Clear();
         path = GameObject.FindGameObjectWithTag("Grid").GetComponent<NodesGrid>().GetPath(transform.position, destination);

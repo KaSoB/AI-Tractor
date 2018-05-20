@@ -6,27 +6,29 @@ public class TaskScan : Task {
     public List<FarmField> FarmField { get; set; }
     public int Radius { get; set; }
 
-    public TaskScan(GameObject subject, object goal, int radius) : base(goal) {
-        Radius = radius;
+    public void Init_Enter() {
+        FarmField = new List<FarmField>();
+    }
 
+    public void Start_Update() {
+        FSM.ChangeState(State.Execute);
     }
-  
 
-    protected override void Init_Enter() {
-        Debug.Log("Init_Enter");
-    }
-    protected override void Init_Update() {
-        Debug.Log("Init_Update");
-        fsm.ChangeState(State.Execute);
-    }
-    protected override void Execute_Enter() {
+    public void Execute_Enter() {
         Debug.Log("Execute_Enter");
         var detectedFarmFields =
-            Physics.OverlapSphere(subject.transform.position, Radius)
+            Physics.OverlapSphere(Subject.transform.position, Radius)
              .Where(y => y.tag == "FarmField")
              .Select(it => it.gameObject.GetComponent<FarmField>());
 
         FarmField.AddRange(detectedFarmFields);
-        fsm.ChangeState(State.Finish);
+        FSM.ChangeState(State.Finish);
+    }
+
+    public void Finish_Enter() {
+        Debug.Log("Znalazłem...");
+        foreach (var item in FarmField) {
+            Debug.Log(item.name);
+        }
     }
 }

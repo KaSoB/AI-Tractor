@@ -11243,6 +11243,17 @@ GameObject:
   m_PrefabParentObject: {fileID: 1488190130113784, guid: 5369123eaecf6fa4c955b0d2d619b76a,
     type: 2}
   m_PrefabInternal: {fileID: 922019202}
+--- !u!114 &1013387770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1013387769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90dcebbbeddc2ce45a698aa9ce649367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1013387774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11443,6 +11454,10 @@ Prefab:
       propertyPath: pesticidesText
       value: 
       objectReference: {fileID: 1934619249}
+    - target: {fileID: 1149621882798982, guid: 3b347ce2379995f4fa2e59efb3adcabb, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3b347ce2379995f4fa2e59efb3adcabb, type: 2}
   m_IsPrefabParent: 0
