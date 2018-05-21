@@ -9,7 +9,6 @@ public class TaskGoTo : Task {
 
     private Vector3 target; // aktualny cel agenta
     private Node currentTargetNode = null; // obecny node
-
     private Queue<Node> path = new Queue<Node>(); // sciezka uzyskana z Grid
 
     private bool IsReachedTarget() {

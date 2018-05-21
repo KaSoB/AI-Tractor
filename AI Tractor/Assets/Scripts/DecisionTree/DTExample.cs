@@ -1,11 +1,11 @@
-﻿using Assets.Scripts.UnityScripts;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 
 public class DTExample {
     public void Run() {
         var example1 = LoadExample1();
         TreeNode root = new DecisionTree().TreeLearn(example1.Value, example1.Key, "result");
-        Files.AppendAllText("DecisionTreeResults1.txt", TreeNode.PrintNode(root).ToString());
+        File.AppendAllText("DecisionTreeResults1.txt", TreeNode.PrintNode(root).ToString());
     }
 
     KeyValuePair<Attribute[], DataTable> LoadExample1() {

@@ -21,7 +21,7 @@ public class DecisionTree {
         if (attributes.Length == 0)
             return new TreeNode(new Attribute(GetMostCommonValue(samples, targetAttribute)));
 
-        // Wybierz atrybut A i uczyń go korzeniem drzewa T.
+
         Total = samples.Rows.Count;
         TargetAttribute = targetAttribute;
         TotalPositives = CountTotalPositives(samples);
@@ -29,7 +29,7 @@ public class DecisionTree {
         EntropySet = CalculateEntropy(TotalPositives, Total - TotalPositives);
 
         Attribute bestAttribute = GetBestAttribute(samples, attributes);
-
+        // Wybierz atrybut A i uczyń go korzeniem drzewa T.
         TreeNode root = new TreeNode(bestAttribute);
 
         DataTable aSample = samples.Clone();

@@ -10,7 +10,7 @@ namespace Assets.Scripts.AStarPathFinding {
         }
 
         public static implicit operator Position(Vector3 vector) {
-            // w 3D component Z odpowiednikiem componentu Y w 2D
+            // w 3D component Z jest odpowiednikiem componentu Y w 2D
             return new Position { X = (int) vector.x, Y = (int) vector.z };
         }
         public override string ToString() {

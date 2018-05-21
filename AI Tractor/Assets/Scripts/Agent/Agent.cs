@@ -4,12 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Agent : MonoBehaviour, INetworkController {
-
     public Vector3 startPosition;
     private NavMeshAgent agent;
     private Queue<Node> path = new Queue<Node>();
     private Vector3 target;
-
     // TODO: usunąć
     public FarmField obj;
     public bool hasObject = false;
@@ -31,7 +29,6 @@ public class Agent : MonoBehaviour, INetworkController {
             target = new Vector3(target.x, 0, target.z);
             agent.destination = target;
         }
-
 
     }
 
@@ -59,6 +56,7 @@ public class Agent : MonoBehaviour, INetworkController {
     }
 
     public string GetTextRaport() {
+
         int x = (int) transform.position.x;
         int y = (int) transform.position.z;
 
