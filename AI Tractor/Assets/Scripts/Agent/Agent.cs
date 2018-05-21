@@ -11,8 +11,8 @@ public class Agent : MonoBehaviour, INetworkController {
     private Vector3 target;
 
     // TODO: usunąć
-    public FarmField obje;
-    public bool findobje = false;
+    public FarmField obj;
+    public bool hasObject = false;
     // --
 
     public TaskManager TaskManager = new TaskManager();
@@ -40,11 +40,10 @@ public class Agent : MonoBehaviour, INetworkController {
     }
 
     public void Scan() {
-        foreach (var item in Physics.OverlapSphere(transform.position, 3F).Where(y => y.tag == "FarmField").Select(it => it.gameObject.GetComponent<FarmField>())) {
+        foreach (var item in Physics.OverlapSphere(transform.position, 2F).Where(y => y.tag == "FarmField").Select(it => it.gameObject.GetComponent<FarmField>())) {
             if (item.Progress == 1F) {
-                obje = item;
-                Debug.Log(":/");
-                findobje = true;
+                obj = item;
+                hasObject = true;
                 break;
             }
 

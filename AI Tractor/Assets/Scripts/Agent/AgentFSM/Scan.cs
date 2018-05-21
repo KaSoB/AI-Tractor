@@ -15,7 +15,10 @@ public class Scan : StateMachineBaseBehaviour {
         hasFinished = true;
         agent.Scan();
 
-        if (agent.findobje) {
+
+
+        if (agent.hasObject) {
+
             animator.SetBool("Harvest", true);
         } else {
             animator.SetBool("Scan", false);

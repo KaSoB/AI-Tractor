@@ -2,11 +2,11 @@
 
 public class Return : StateMachineBaseBehaviour {
     [SerializeField]
-    private Vector3 idleStopPosition;
+    private Vector3 stopPosition;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        agent.GoTo(idleStopPosition);
+        agent.GoTo(stopPosition);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

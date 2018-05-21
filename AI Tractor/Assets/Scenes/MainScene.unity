@@ -9966,6 +9966,10 @@ Prefab:
       propertyPath: m_Name
       value: RedAgent
       objectReference: {fileID: 0}
+    - target: {fileID: 1488190130113784, guid: 5369123eaecf6fa4c955b0d2d619b76a, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5369123eaecf6fa4c955b0d2d619b76a, type: 2}
   m_IsPrefabParent: 0

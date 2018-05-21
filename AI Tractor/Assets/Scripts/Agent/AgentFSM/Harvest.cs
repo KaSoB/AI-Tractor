@@ -14,12 +14,13 @@ public class Harvest : StateMachineBaseBehaviour {
         }
 
         hasFinished = true;
-        if (agent.findobje) {
-            agent.obje.Harvest();
-            agent.findobje = false;
+        if (agent.hasObject) {
+            agent.obj.Harvest();
+            agent.hasObject = false;
             animator.SetBool("Harvest", false);
             animator.SetBool("Scan", false);
         }
+        
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

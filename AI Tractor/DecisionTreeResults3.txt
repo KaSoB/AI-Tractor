@@ -1,0 +1,14 @@
+outlook
+	sunny
+		humidity
+			high
+				False
+			normal
+				True
+	overcast
+		True
+	rainy
+		windy
+			True
+		true	
+			False
