@@ -63,14 +63,12 @@ public class GameSimulator : MonoBehaviour {
         }
     }
     private void ModifyWindCondition() {
-        // probability < 20%
         bool changeWindCondition = RandomBoolean();
-
         if (isWindy != changeWindCondition) {
             IsWindy = !IsWindy;
         }
-
     }
+
     private void ChangeSeason() {
         CurrentSeason = (Season) System.Enum.ToObject(typeof(Season), ((int) CurrentSeason + 1) % 4);
     }

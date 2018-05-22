@@ -52,6 +52,10 @@ public class FarmField : MonoBehaviour {
         return properties[id].Level;
     }
 
+    public void AddLevel(Property.Type id, int points) {
+        SetProperty(id, GetLevel(id) + points);
+    }
+
     public Property GetProperty(Property.Type id) {
         return properties[id];
     }

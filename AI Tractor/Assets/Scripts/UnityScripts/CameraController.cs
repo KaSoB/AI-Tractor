@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour {
     [SerializeField]
@@ -14,7 +12,7 @@ public class CameraController : MonoBehaviour {
 
     public float minZ;
     public float maxZ;
- 
+
     void Update() {
         // Forward
         if (Input.GetKey(KeyCode.UpArrow)) {

@@ -1,6 +1,6 @@
 ﻿
+using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class TaskTestController : MonoBehaviour {
     protected Agent agent;
@@ -13,35 +13,29 @@ public class TaskTestController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             agent.TaskManager.ChangeState(Task.State.Start);
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha8)) {
-            var task = GetComponent<TaskScan>();
-            task.Subject = transform.gameObject;
-            task.Radius = 5;
-            agent.TaskManager.SetTask(task);
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            agent.GoToFillUpResource(ResourceType.Soil, Task.State.Start);
         }
-
-
         if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            var task = GetComponent<TaskGoTo>();
-            task.Subject = transform.gameObject;
-            task.NavMeshAgent = task.Subject.GetComponent<NavMeshAgent>();
-            task.Destination = new Vector3(6, 0, 0);
-
-            agent.TaskManager.SetTask(task);
+            agent.Goto(new Vector3(6, 0, 0), Task.State.Start);
         }
-
         if (Input.GetKeyDown(KeyCode.Alpha3)) {
-            var task = GetComponent<TaskGoTo>();
-            task.Subject = transform.gameObject;
-            task.NavMeshAgent = task.Subject.GetComponent<NavMeshAgent>();
-            task.Destination = new Vector3(0, 0, 0);
-
-            agent.TaskManager.SetTask(task);
+            agent.Goto(new Vector3(0, 0, 0), Task.State.Start);
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha0)) {
-            agent.TaskManager.SetTask(GetComponent<TaskTest>());
+        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            agent.Harvest(GameObject.FindGameObjectsWithTag("FarmField").OrderBy(y => Vector3.Distance(transform.position, y.transform.position)).First().GetComponent<FarmField>(), Task.State.Start);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5)) {
+            agent.DoFarmAction(GameObject.FindGameObjectsWithTag("FarmField").OrderBy(y => Vector3.Distance(transform.position, y.transform.position)).First().GetComponent<FarmField>(), Property.Type.Humidity, ResourceType.Water, 1, Task.State.Start);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6)) {
+            agent.DoFarmAction(GameObject.FindGameObjectsWithTag("FarmField").OrderBy(y => Vector3.Distance(transform.position, y.transform.position)).First().GetComponent<FarmField>(), Property.Type.Fertylity, ResourceType.Fertilizer, 1, Task.State.Start);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7)) {
+            agent.FillUpResource(ResourceType.Water, Task.State.Start);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8)) {
+            agent.Scan(5, Task.State.Start);
         }
     }
 }

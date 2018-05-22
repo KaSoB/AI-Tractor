@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.AStarPathFinding;
-using System;
+﻿using System;
 using UnityEditor;
 using UnityEngine;
 

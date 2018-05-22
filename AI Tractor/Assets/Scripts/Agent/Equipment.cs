@@ -32,13 +32,20 @@ public class Equipment : MonoBehaviour {
     public int GetResourceLevel(ResourceType resourceType) {
         return resources[resourceType].Amount;
     }
+    public void PushPoints(ResourceType resourceType, int points) {
+        resources[resourceType].Amount += points;
+    }
+    public void PopPoints(ResourceType resourceType, int points) {
+        resources[resourceType].Amount -= points;
+    }
     public int SetResourceLevel(ResourceType resourceType, int level = Resource.MAX_LEVEL) {
         return resources[resourceType].Amount = level;
     }
+
 }
 
 public enum ResourceType {
-    Water, Pesticide, Fertilizer, Soil // TODO: Wymyśleć coś zamiast Soil
+    Water, Pesticide, Fertilizer, Soil // TODO: Wymyśleć coś zamiast Soil // edycja ctrl+r x2
 }
 
 public class Resource {

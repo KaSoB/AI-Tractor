@@ -14,7 +14,7 @@ public class ClickToMove : MonoBehaviour {
             RaycastHit hit;
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
-                agent.sGoTo(hit.point, Task.State.Start);
+                agent.Goto(hit.point, Task.State.Start);
             }
         }
     }
