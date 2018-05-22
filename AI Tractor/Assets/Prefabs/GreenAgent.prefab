@@ -41,6 +41,8 @@ GameObject:
   - component: {fileID: 95797193015245604}
   - component: {fileID: 114409479105029644}
   - component: {fileID: 114537775274053664}
+  - component: {fileID: 114772296887776570}
+  - component: {fileID: 114164411483910688}
   m_Layer: 0
   m_Name: GreenAgent
   m_TagString: AI
@@ -703,8 +705,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
-  obj: {fileID: 0}
-  hasObject: 0
+--- !u!114 &114164411483910688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1149621882798982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b23368b5fce9a4f9d054459c23480e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114409479105029644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -732,6 +743,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b2d5a09d9f5604fb03dcf39ce424b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114772296887776570
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1149621882798982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119377eff9ff16a4990219348b1b333f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &195512854047342266
 NavMeshAgent:
   m_ObjectHideFlags: 1
@@ -741,8 +763,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.27
-  m_Speed: 1
-  m_Acceleration: 2
+  m_Speed: 1.5
+  m_Acceleration: 3
   avoidancePriority: 50
   m_AngularSpeed: 400
   m_StoppingDistance: 0

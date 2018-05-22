@@ -10,7 +10,7 @@ namespace AStarPathFinding {
     public static class AStar {
         public static IEnumerable<AStarState> FindPath(NodesGrid grid, Node startNode, Node targetNode) {
             if (!startNode.Walkable || !targetNode.Walkable) {
-                return null;
+                return new List<AStarState>();
             }
             grid.ClearScore();
 
@@ -45,7 +45,7 @@ namespace AStarPathFinding {
                     }
                 }
             }
-            return null;
+            return new List<AStarState>();
         }
 
         private static IEnumerable<AStarState> ReconstructPath(Node startNode, Node targetNode) {

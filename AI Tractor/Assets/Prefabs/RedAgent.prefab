@@ -689,8 +689,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
-  obj: {fileID: 0}
-  hasObject: 0
 --- !u!114 &114123126512484546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -771,8 +769,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.27
-  m_Speed: 1
-  m_Acceleration: 2
+  m_Speed: 1.5
+  m_Acceleration: 3
   avoidancePriority: 50
   m_AngularSpeed: 400
   m_StoppingDistance: 0

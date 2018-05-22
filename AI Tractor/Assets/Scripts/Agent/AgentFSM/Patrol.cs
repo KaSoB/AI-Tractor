@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,27 +9,21 @@ public class Patrol : StateMachineBaseBehaviour {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         waypoints = GameObject.FindGameObjectsWithTag("Waypoint").Select(y => y.transform.localPosition).ToList();
-        hasFinished = false;
 
         currentWaypointIndex = animator.GetInteger("CurrentWaypointIndex");
-        agent.GoTo(waypoints[currentWaypointIndex]);
+        agent.sGoTo(waypoints[currentWaypointIndex], Task.State.Start);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
-        if (hasFinished) {
+        if (agent.TaskManager.HasFinished()) {
+            animator.SetBool("Scan", true);
             return;
         }
 
         if (!waypoints.Any()) {
             return;
         }
-
-        if (agent.IsReachedTarget()) {
-            hasFinished = true;
-            animator.SetBool("Scan", true);
-        }
-
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

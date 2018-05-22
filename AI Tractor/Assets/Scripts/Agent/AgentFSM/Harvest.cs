@@ -12,15 +12,16 @@ public class Harvest : StateMachineBaseBehaviour {
         if (hasFinished) {
             return;
         }
+        animator.SetBool("Harvest", false);
+        animator.SetBool("Scan", false);
+        //hasFinished = true;
+        //if (agent.hasObject) {
+        //    agent.obj.Harvest();
+        //    agent.hasObject = false;
+        //    animator.SetBool("Harvest", false);
+        //    animator.SetBool("Scan", false);
+        //}
 
-        hasFinished = true;
-        if (agent.hasObject) {
-            agent.obj.Harvest();
-            agent.hasObject = false;
-            animator.SetBool("Harvest", false);
-            animator.SetBool("Scan", false);
-        }
-        
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

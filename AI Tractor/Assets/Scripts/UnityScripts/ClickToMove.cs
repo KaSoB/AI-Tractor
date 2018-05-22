@@ -14,9 +14,7 @@ public class ClickToMove : MonoBehaviour {
             RaycastHit hit;
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
-                agent.GoTo(hit.point);
-                DTExample iD3Sample = new DTExample();
-                iD3Sample.Run();
+                agent.sGoTo(hit.point, Task.State.Start);
             }
         }
     }

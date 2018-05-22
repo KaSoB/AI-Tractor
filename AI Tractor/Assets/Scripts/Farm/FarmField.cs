@@ -1,5 +1,4 @@
-﻿using AStarPathFinding;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class EventArgs<T> : EventArgs {
     public T Data { get; set; }
 }
 
-public class FarmField : MonoBehaviour, INetworkIdentity {
+public class FarmField : MonoBehaviour {
     public enum FieldType {
         Corn, Wheat, Carrot
     }
@@ -34,12 +33,8 @@ public class FarmField : MonoBehaviour, INetworkIdentity {
 
 
     // TODO zmienić value na int
-    private Dictionary<Property.Type, Property> properties = new Dictionary<Property.Type, Property>() {
-        { Property.Type.Humidity, new Property(Property.Type.Humidity) },
-        { Property.Type.Fertylity, new Property(Property.Type.Fertylity) },
-        { Property.Type.Acidity, new Property(Property.Type.Acidity) },
-        { Property.Type.Pollution, new Property( Property.Type.Pollution) }
-    };
+    private Dictionary<Property.Type, Property> properties;
+
     public void SetProperty(Property.Type id, int value) {
         if (properties.ContainsKey(id)) {
             properties[id].Level = value;
@@ -66,6 +61,12 @@ public class FarmField : MonoBehaviour, INetworkIdentity {
     }
 
     void Start() {
+        properties = new Dictionary<Property.Type, Property>() {
+        { Property.Type.Humidity, new Property(Property.Type.Humidity,true) },
+        { Property.Type.Fertylity, new Property(Property.Type.Fertylity,true) },
+        { Property.Type.Acidity, new Property(Property.Type.Acidity,true) },
+        { Property.Type.Pollution, new Property( Property.Type.Pollution,true) }
+    };
         Progress = UnityEngine.Random.Range(0F, 1F);
         InvokeRepeating("Grow", 1F, progressRepeatTime);
     }
@@ -93,15 +94,5 @@ public class FarmField : MonoBehaviour, INetworkIdentity {
         return fieldType.ToString() + " field";
     }
 
-    public string GetTextRaport() {
-
-        int x = (int) transform.position.x;
-        int y = (int) transform.position.z;
-
-        var playerPosition = GameObject.FindGameObjectWithTag("AI").transform.position;
-
-        return string.Format("{0} {1} {2} {3} {4} {5}",
-            name, fieldType, (Progress / 1F).ToString("0.##"), x, y, AStar.GetDistance(transform.position, playerPosition));
-    }
 }
 

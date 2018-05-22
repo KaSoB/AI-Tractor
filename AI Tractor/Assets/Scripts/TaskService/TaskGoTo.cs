@@ -12,10 +12,10 @@ public class TaskGoTo : Task {
     private Queue<Node> path = new Queue<Node>(); // sciezka uzyskana z Grid
 
     private bool IsReachedTarget() {
-        return Vector3.Distance(Subject.transform.position, target) < 0.15F;
+        return Vector3.Distance(Subject.transform.position, target) < 0.2F;
     }
     private bool IsReachedDestination() {
-        return Vector3.Distance(Subject.transform.position, Destination) < 0.15F;
+        return Vector3.Distance(Subject.transform.position, Destination) < 0.2F;
     }
 
     public void GoTo() {
@@ -42,6 +42,8 @@ public class TaskGoTo : Task {
             target = new Vector3(point.x, 0, point.z);
             NavMeshAgent.destination = target;
             FSM.ChangeState(State.Execute);
+        } else {
+            FSM.ChangeState(State.Finish);
         }
 
     }

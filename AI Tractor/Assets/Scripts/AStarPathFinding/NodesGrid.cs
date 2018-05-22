@@ -30,7 +30,6 @@ public class NodesGrid : MonoBehaviour {
         foreach (var item in path) {
             Debug.Log("{" + item.Node.Position.ToString() + "}" + " " + item.Direction + " " + item.Action);
         }
-
         return new Queue<Node>(AStarState.ToNodes(path));
     }
 

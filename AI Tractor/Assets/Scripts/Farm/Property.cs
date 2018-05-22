@@ -26,6 +26,10 @@ public class Property {
         PropertyType = propertyType;
         Level = initLevel;
     }
+    public Property(Type propertyType, bool random) {
+        PropertyType = propertyType;
+        Level = (random) ? Random.Range(1, MAX_LEVEL) : 1;
+    }
 
     public bool IsInRange(int level) {
         return level >= 1 && level <= MAX_LEVEL;

@@ -2,13 +2,9 @@
 public class TaskManager {
     public Task CurrentTask { get; private set; }
 
-    public TaskManager() {
-
-    }
-
-    public void SetTask(Task task) {
+    public void SetTask(Task task, Task.State state = Task.State.Init) {
         CurrentTask = task;
-        CurrentTask.GetStateMachine().ChangeState(Task.State.Init);
+        ChangeState(state);
     }
     public void ChangeState(Task.State state) {
         CurrentTask.GetStateMachine().ChangeState(state);
@@ -17,7 +13,7 @@ public class TaskManager {
         return CurrentTask != null;
     }
     public bool HasFinished() {
-        return CurrentTask.GetStateMachine().State == Task.State.Finish || CurrentTask.GetStateMachine().State == Task.State.Interrupt;
+        return GetStatus() == Task.State.Finish || GetStatus() == Task.State.Interrupt;
     }
     public Task.State GetStatus() {
         return CurrentTask.GetStateMachine().State;
