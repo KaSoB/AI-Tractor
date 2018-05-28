@@ -49,7 +49,7 @@ public enum ResourceType {
 }
 
 public class Resource {
-    public const int INIT_LEVEL = 5;
+    public const int INIT_LEVEL = 10;
     public const int MAX_LEVEL = 10;
 
     Text textUI;

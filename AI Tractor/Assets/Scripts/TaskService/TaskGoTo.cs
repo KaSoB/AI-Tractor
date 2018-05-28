@@ -61,7 +61,7 @@ public class TaskGoTo : Task {
 
 
     public void Finish_Enter() {
-        Debug.Log("Koniec drogi...");
+        //  Debug.Log("Koniec drogi...");
     }
 }
 

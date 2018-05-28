@@ -8,7 +8,6 @@ public class Scan : StateMachineBaseBehaviour {
         hasFinished = false;
         agent.Scan(1, Task.State.Start);
     }
-    int i = 0;
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
         if (hasFinished) {
@@ -21,12 +20,11 @@ public class Scan : StateMachineBaseBehaviour {
         TaskScan taskScan = agent.TaskManager.CurrentTask as TaskScan;
         var detected = taskScan.FarmFields;
         if (detected.Any()) {
-            animator.SetBool("Harvest", true);
+            animator.SetBool("MakeDecision", true);
         } else {
             animator.SetBool("Scan", false);
         }
         hasFinished = true;
-        Debug.Log("ile razy: " + i++);
 
     }
 

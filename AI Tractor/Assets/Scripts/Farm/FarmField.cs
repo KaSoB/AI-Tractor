@@ -32,7 +32,6 @@ public class FarmField : MonoBehaviour {
     #endregion
 
 
-    // TODO zmienić value na int
     private Dictionary<Property.Type, Property> properties;
 
     public void SetProperty(Property.Type id, int value) {
@@ -55,7 +54,9 @@ public class FarmField : MonoBehaviour {
     public void AddLevel(Property.Type id, int points) {
         SetProperty(id, GetLevel(id) + points);
     }
-
+    public void PopLevel(Property.Type id, int points) {
+        SetProperty(id, GetLevel(id) + points);
+    }
     public Property GetProperty(Property.Type id) {
         return properties[id];
     }
@@ -94,6 +95,11 @@ public class FarmField : MonoBehaviour {
     public void Harvest() {
         Progress = 0F;
     }
+
+    public FieldType GetFieldType() {
+        return fieldType;
+    }
+
     public override string ToString() {
         return fieldType.ToString() + " field";
     }

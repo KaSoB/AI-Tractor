@@ -2,23 +2,25 @@
 
 public class DataTable {
     public string DataTableName { get; set; }
-    public List<string> Columns { get; set; }
-    public List<string[]> Rows { get; set; }
+    public List<string> Columns { get; set; } = new List<string>();
+    public List<string[]> Rows { get; set; } = new List<string[]>();
 
+    public DataTable() {
+
+    }
     public DataTable(string name) {
         DataTableName = name;
-        Columns = new List<string>();
-        Rows = new List<string[]>();
     }
 
     public int ColumnPosition(string columnName) {
         return Columns.IndexOf(columnName);
     }
 
-    public DataTable Clone() {
-        DataTable tmp = new DataTable(DataTableName);
-        tmp.Columns.AddRange(Columns);
-        tmp.Rows.AddRange(Rows);
+    public static DataTable Clone(DataTable dataTable) {
+        DataTable tmp = new DataTable(dataTable.DataTableName);
+        tmp.Columns = dataTable.Columns.GetRange(0, dataTable.Columns.Count);
+        tmp.Rows = dataTable.Rows.GetRange(0, dataTable.Rows.Count);
+
         return tmp;
     }
 }

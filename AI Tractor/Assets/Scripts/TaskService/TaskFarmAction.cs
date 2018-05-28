@@ -20,10 +20,15 @@ public class TaskFarmAction : Task {
     }
 
     public void Execute_Update() {
-        // pobierz z agenta points
-        Equipment.PopPoints(ResourceType, Points);
-        // dodaj polu points
-        FarmField.AddLevel(PropertyType, Points);
+        if (Points > 0) {
+            // pobierz z agenta points
+            Equipment.PopPoints(ResourceType, Points);
+            // dodaj polu points
+            FarmField.AddLevel(PropertyType, Points);
+        } else {
+            FarmField.PopLevel(PropertyType, Points);
+        }
+
 
         FSM.ChangeState(State.Finish);
     }

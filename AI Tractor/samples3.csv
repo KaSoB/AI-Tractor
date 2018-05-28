@@ -1,0 +1,4 @@
+FarmFieldType;Completed;Humidity;Fertylity;Acidity;Pollution;Season;IsWindy;result
+Corn;false;1-2;3-4;1-3;1-2;Winter;false;false
+Wheat;false;3-4;5;4;3-5;Summer;false;false
+Carrot;true;5;1-2;5;3-5;Spring;true;true

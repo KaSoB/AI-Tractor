@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using UnityEngine;
 
 public class DecisionTree {
     public DataTable Samples { get; set; }
     private int TotalPositives = 0;
     private int Total = 0;
 
-    private string TargetAttribute = "result";
+    private string TargetAttribute = "result"; // Główna kolumna z wynikami
     private double EntropySet = 0.0F;
 
     private TreeNode InternalTreeLearn(DataTable samples, Attribute[] attributes, string targetAttribute) {
@@ -31,8 +32,11 @@ public class DecisionTree {
         Attribute bestAttribute = GetBestAttribute(samples, attributes);
         // Wybierz atrybut A i uczyń go korzeniem drzewa T.
         TreeNode root = new TreeNode(bestAttribute);
+        if (bestAttribute == null)
+            return root;
 
-        DataTable aSample = samples.Clone();
+        DataTable aSample = DataTable.Clone(Samples);
+
         // Dla każdej wartości W atrybutu A:
         foreach (string value in bestAttribute.Values) {
 
@@ -50,7 +54,7 @@ public class DecisionTree {
 
 
             if (aSample.Rows.Count == 0) {
-                return new TreeNode(new Attribute(GetMostCommonValue(aSample, targetAttribute)));
+                root.AddTreeNode(new TreeNode(new Attribute(GetMostCommonValue(samples, targetAttribute))), value);
             } else {
                 DecisionTree dc3 = new DecisionTree();
                 // Dodaj do T krawędź oznaczoną etykietą W, której wierzchołek docelowy jest korzeniem
@@ -83,6 +87,9 @@ public class DecisionTree {
     // I({poz, neg}) = −P(poz)log2(P(poz)) − P(neg)log2(P(neg))
     private double CalculateEntropy(int positives, int negatives) {
         int total = positives + negatives;
+        if (total == 0) {
+            return 0F;
+        }
         double ratioPositive = (double) positives / total;
         double ratioNegative = (double) negatives / total;
 
@@ -91,9 +98,7 @@ public class DecisionTree {
         if (ratioNegative != 0)
             ratioNegative = -(ratioNegative) * System.Math.Log(ratioNegative, 2);
 
-        double result = ratioPositive + ratioNegative;
-
-        return result;
+        return ratioPositive + ratioNegative;
     }
 
     // E(A) = Suma 1≤i≤k ((pi + ni)/(p + n))I(Ei)
@@ -131,7 +136,7 @@ public class DecisionTree {
     }
 
     private Attribute GetBestAttribute(DataTable samples, Attribute[] attributes) {
-        double maxGain = 0.0;
+        double maxGain = double.MinValue;
         Attribute result = null;
 
         foreach (Attribute attribute in attributes) {
@@ -142,21 +147,23 @@ public class DecisionTree {
             }
         }
 
-        if (result == null) {
-            Console.WriteLine(":(");
-            result = attributes[0];
-        }
         return result;
     }
 
     private bool AllSamplesPositives(DataTable samples, string targetAttribute) {
-        int index = samples.ColumnPosition(targetAttribute);
-        foreach (var row in samples.Rows) {
-            if (row[index] == "false")
-                return false;
-        }
+        try {
+            int index = samples.ColumnPosition(targetAttribute);
+            foreach (var row in samples.Rows) {
+                if (row[index] == "false")
+                    return false;
+            }
 
+            return true;
+        } catch (Exception e) {
+            Debug.Log(e);
+        }
         return true;
+
     }
 
     private bool AllSamplesNegatives(DataTable samples, string targetAttribute) {

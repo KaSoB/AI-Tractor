@@ -16,13 +16,14 @@ namespace ServerService {
         private Thread ListenerThread;
 
         const int MAX_CLIENTS = 5;
-        public List<TcpClient> Clients { private set; get; }
+        public Dictionary<int, TcpClient> Clients { private set; get; }
+        public Dictionary<int, List<string>> MessageBuffer { private set; get; }
 
         public Server(IPAddress IPAddress, int port) {
             Online = false;
             Port = port;
             IP_Adress = IPAddress;
-            Clients = new List<TcpClient>();
+            Clients = new Dictionary<int, TcpClient>();
         }
 
         public void Start() {
@@ -61,8 +62,10 @@ namespace ServerService {
         }
         private void HandleClient(TcpClient client) {
             try {
-                SendText(client, "Hello");
-                Clients.Add(client);
+                int id = int.Parse(LoadText(client)[0]);
+                Clients.Add(id, client);
+                // todo: contains
+                MessageBuffer.Add(id, new List<string>());
             } catch {
                 Debug.Log("Nie uzyskano odpowiedzi od klienta lub utracono połączenie.");
             }
@@ -73,6 +76,11 @@ namespace ServerService {
             int bytesRead = c.GetStream().Read(buffer, 0, c.ReceiveBufferSize);
             string text = Encoding.ASCII.GetString(buffer, 0, bytesRead);
             return text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries); // Split by '\n'
+        }
+        public void SendText(int id, string text) {
+            text += '\n';  // Add '\n' to mark the end of the message
+            byte[] buffer = Encoding.ASCII.GetBytes(text);
+            Clients[id].GetStream().Write(buffer, 0, buffer.Length);
         }
         public void SendText(TcpClient c, string text) {
             text += '\n';  // Add '\n' to mark the end of the message

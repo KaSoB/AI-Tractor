@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 public class TreeNode {
@@ -14,8 +15,8 @@ public class TreeNode {
                     mChilds.Add(null);
             } else {
                 mChilds = new ArrayList(1) {
-                null
-            };
+                    null
+                };
             }
             mAttribute = attribute;
         } catch (Exception e) {
@@ -28,34 +29,54 @@ public class TreeNode {
         mChilds[index] = treeNode;
     }
 
-    public int totalChilds {
+    public int TotalChilds {
         get {
             return mChilds.Count;
         }
     }
 
-    public TreeNode getChild(int index) {
+    public TreeNode GetChild(int index) {
         return (TreeNode) mChilds[index];
     }
 
-    public Attribute attribute {
+    public Attribute Attribute {
         get {
             return mAttribute;
         }
     }
 
-    public TreeNode getChildByBranchName(string branchName) {
+    public TreeNode GetChildByBranchName(string branchName) {
         int index = mAttribute.IndexValue(branchName);
         return (TreeNode) mChilds[index];
     }
 
-    public static StringBuilder PrintNode(TreeNode root, string tabs = "") {
+    public static bool Check(TreeNode treeNode, Dictionary<string, string> info) {
+        int totalChilds = treeNode.TotalChilds;
+        string ret;
+        for (int i = 0 ; i < totalChilds ; i++) {
+            if (info.TryGetValue(treeNode.Attribute.ToString(), out ret)) {
+                TreeNode child = treeNode.GetChildByBranchName(ret);
+                if (child != null) {
+                    if (child.Attribute.ToString().ToLower() == "true") {
+                        return true;
+                    } else if (child.Attribute.ToString().ToLower() == "false") {
+                        return false;
+                    } else {
+                        return Check(child, info);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static StringBuilder PrintNodes(TreeNode root, string tabs = "") {
         StringBuilder builder = new StringBuilder();
-        builder.AppendLine(tabs + root.attribute);
-        if (root.attribute.Values != null) {
-            foreach (var item in root.attribute.Values) {
-                builder.AppendLine(tabs + "\t" + item);
-                builder.Append(PrintNode(root.getChildByBranchName(item), "\t\t" + tabs));
+        builder.AppendLine(tabs + root.Attribute);
+        if (root.Attribute.Values != null) {
+            foreach (var item in root.Attribute.Values) {
+                builder.AppendLine(tabs + " " + item);
+                builder.Append(PrintNodes(root.GetChildByBranchName(item), "  " + tabs));
             }
         }
         return builder;
