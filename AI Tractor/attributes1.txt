@@ -1,7 +1,0 @@
-@ATTRIBUTE ceu             {sol,nublado,chuva}
-
-@ATTRIBUTE temperatura     {alta,baixa,suave}
-
-@ATTRIBUTE humidade   	   {alta,normal}
-
-@ATTRIBUTE vento           {sim,nao}

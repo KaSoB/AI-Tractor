@@ -17,10 +17,9 @@ public class DataTable {
     }
 
     public static DataTable Clone(DataTable dataTable) {
-        DataTable tmp = new DataTable(dataTable.DataTableName);
-        tmp.Columns = dataTable.Columns.GetRange(0, dataTable.Columns.Count);
-        tmp.Rows = dataTable.Rows.GetRange(0, dataTable.Rows.Count);
-
-        return tmp;
+        return new DataTable(dataTable.DataTableName) {
+            Columns = dataTable.Columns.GetRange(0, dataTable.Columns.Count),
+            Rows = dataTable.Rows.GetRange(0, dataTable.Rows.Count)
+        };
     }
 }

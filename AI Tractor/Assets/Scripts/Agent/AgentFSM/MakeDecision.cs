@@ -19,7 +19,7 @@ public class MakeDecision : StateMachineBaseBehaviour {
         TaskScan taskScan = agent.TaskManager.CurrentTask as TaskScan;
         farmFields = taskScan.FarmFields;
 
-
+        // TODO:
         DTRunner.Run();
 
 
@@ -42,8 +42,7 @@ public class MakeDecision : StateMachineBaseBehaviour {
 
     public void LoadInfo() {
         foreach (var farmField in farmFields) {
-            var description = CreateLog(farmField);
-            if (DTRunner.Check(description) == true) {
+            if (DTRunner.Check(CreateInfo(farmField)) == true) {
                 FarmField = farmField;
                 return;
             } else {
@@ -51,7 +50,7 @@ public class MakeDecision : StateMachineBaseBehaviour {
             }
         }
     }
-    public Dictionary<string, string> CreateLog(FarmField farmField) {
+    public Dictionary<string, string> CreateInfo(FarmField farmField) {
         var isWindy = GameObject.FindObjectOfType<GameSimulator>().IsWindy ? "yes" : "no";
         var season = GameObject.FindObjectOfType<GameSimulator>().CurrentSeason;
         var fieldtype = farmField.GetFieldType();

@@ -26,10 +26,10 @@ public class NodesGrid : MonoBehaviour {
 
         var path = AStar.FindPath(this, startNode, targetNode);
 
-        // Debug
-        //  foreach (var item in path) {
-        //     Debug.Log("{" + item.Node.Position.ToString() + "}" + " " + item.Direction + " " + item.Action);
-        // }
+
+        foreach (var item in path) {
+            Debug.Log("{" + item.Node.Position.ToString() + "}" + " " + item.Direction + " " + item.Action);
+        }
         return new Queue<Node>(AStarState.ToNodes(path));
     }
 

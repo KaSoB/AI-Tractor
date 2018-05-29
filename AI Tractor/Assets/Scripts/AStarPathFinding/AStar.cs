@@ -13,7 +13,7 @@ namespace AStarPathFinding {
                 return new List<AStarState>();
             }
             grid.ClearScore();
-
+            // todo: kolejka priorytetowa
             List<Node> openSet = new List<Node>() {
                 startNode
             };
@@ -64,6 +64,7 @@ namespace AStarPathFinding {
             List<Node> neighbours = new List<Node>();
             foreach (var location in NeighbourLocations) {
                 var neighboursPosition = node.Position + location.Value;
+
                 if (grid.IsInsideGrid(neighboursPosition)) {
                     neighbours.Add(grid.GetNode(neighboursPosition));
                 }

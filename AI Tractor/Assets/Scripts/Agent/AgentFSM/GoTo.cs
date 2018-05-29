@@ -4,7 +4,7 @@ public class GoTo : StateMachineBaseBehaviour {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         hasFinished = false;
-        agent.Goto(MakeDecision.FarmField.transform.position, Task.State.Start);
+        agent.GoTo(MakeDecision.FarmField.transform.position, Task.State.Start);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

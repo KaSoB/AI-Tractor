@@ -13,49 +13,49 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Idle
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 1
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: CurrentWaypointIndex
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Scan
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: MakeDecision
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: GoTo
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Harvest
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: GoToFillUp
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -714,7 +714,7 @@ AnimatorStateMachine:
     m_Position: {x: 264, y: 276, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102854668196281726}
-    m_Position: {x: 540, y: 156, z: 0}
+    m_Position: {x: 528, y: 276, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102072227632738546}
     m_Position: {x: 264, y: 60, z: 0}
@@ -723,13 +723,13 @@ AnimatorStateMachine:
     m_Position: {x: 504, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102654802374361626}
-    m_Position: {x: 540, y: 312, z: 0}
+    m_Position: {x: 804, y: 276, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102372229035485568}
-    m_Position: {x: 540, y: 384, z: 0}
+    m_Position: {x: 804, y: 216, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102950692078101792}
-    m_Position: {x: 540, y: 456, z: 0}
+    m_Position: {x: 804, y: 156, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    [SerializeField]
-    private float cameraOffset;
+    public float cameraDeltaMove;
 
     public float minX;
     public float maxX;
@@ -16,28 +15,28 @@ public class CameraController : MonoBehaviour {
     void Update() {
         // Forward
         if (Input.GetKey(KeyCode.UpArrow)) {
-            transform.position += new Vector3(cameraOffset, 0F, cameraOffset);
+            transform.position += new Vector3(cameraDeltaMove, 0F, cameraDeltaMove);
         }
         // Backward
         if (Input.GetKey(KeyCode.DownArrow)) {
-            transform.position += new Vector3(-cameraOffset, 0F, -cameraOffset);
+            transform.position += new Vector3(-cameraDeltaMove, 0F, -cameraDeltaMove);
         }
         // Left
         if (Input.GetKey(KeyCode.LeftArrow)) {
-            transform.position += new Vector3(-cameraOffset, 0F, cameraOffset);
+            transform.position += new Vector3(-cameraDeltaMove, 0F, cameraDeltaMove);
         }
         // Right
         if (Input.GetKey(KeyCode.RightArrow)) {
-            transform.position += new Vector3(cameraOffset, 0F, -cameraOffset);
+            transform.position += new Vector3(cameraDeltaMove, 0F, -cameraDeltaMove);
         }
     }
 
     private void LateUpdate() {
-        Vector3 newCameraPos = new Vector3 {
+        // Avoid leaving boundary
+        transform.position = new Vector3 {
             x = Mathf.Clamp(transform.position.x, minX, maxX),
             y = Mathf.Clamp(transform.position.y, minY, maxY),
             z = Mathf.Clamp(transform.position.z, minZ, maxZ)
         };
-        transform.position = newCameraPos;
     }
 }

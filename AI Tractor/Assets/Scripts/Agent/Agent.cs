@@ -11,7 +11,7 @@ public class Agent : MonoBehaviour {
 
     }
 
-    public void Goto(Vector3 destination, Task.State state) {
+    public void GoTo(Vector3 destination, Task.State state) {
         var task = GetComponent<TaskGoTo>();
         task.NavMeshAgent = GetComponent<NavMeshAgent>();
         task.Destination = new Vector3((int) destination.x, 0, (int) destination.z);
@@ -19,7 +19,7 @@ public class Agent : MonoBehaviour {
     }
 
     public void BackToStartPosition() {
-        Goto(StartPosition, Task.State.Start);
+        GoTo(StartPosition, Task.State.Start);
     }
 
     public void Scan(int radius, Task.State state) {

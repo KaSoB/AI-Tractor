@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public class Property {
+    public const int MIN_LEVEL = 1;
     public const int INIT_LEVEL = 3;
     public const int MAX_LEVEL = 5;
     // Zmiana powyższej wartości wymaga zmian w warstwie UI
@@ -28,11 +29,11 @@ public class Property {
     }
     public Property(Type propertyType, bool random) {
         PropertyType = propertyType;
-        Level = (random) ? Random.Range(1, MAX_LEVEL) : 1;
+        Level = (random) ? Random.Range(MIN_LEVEL, MAX_LEVEL) : MIN_LEVEL;
     }
 
     public bool IsInRange(int level) {
-        return level >= 1 && level <= MAX_LEVEL;
+        return level >= MIN_LEVEL && level <= MAX_LEVEL;
     }
 
     public override string ToString() {

@@ -26,7 +26,7 @@ public class TaskFarmAction : Task {
             // dodaj polu points
             FarmField.AddLevel(PropertyType, Points);
         } else {
-            FarmField.PopLevel(PropertyType, Points);
+            FarmField.DeleteLevel(PropertyType, Points);
         }
 
 
