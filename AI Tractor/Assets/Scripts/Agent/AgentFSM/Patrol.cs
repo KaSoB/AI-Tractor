@@ -11,7 +11,7 @@ public class Patrol : StateMachineBaseBehaviour {
         waypoints = GameObject.FindGameObjectsWithTag("Waypoint").Select(y => y.transform.localPosition).ToList();
 
         currentWaypointIndex = animator.GetInteger("CurrentWaypointIndex");
-        agent.GoTo(waypoints[currentWaypointIndex], Task.State.Start);
+        agent.GoTo(waypoints[currentWaypointIndex]);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

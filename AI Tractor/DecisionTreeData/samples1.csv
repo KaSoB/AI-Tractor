@@ -1,0 +1,15 @@
+Outlook;Temperature;Humidity;Wind;result
+Sunny;Hot;High;Weak;false
+Sunny;Hot;High;Strong;false
+Overcast;Hot;High;Weak;true
+Rain;Mild;High;Weak;true
+Rain;Cool;Normal;Weak;true
+Rain;Cool;Normal;Strong;false
+Overcast;Cool;Normal;Strong;true
+Sunny;Mild;High;Weak;false
+Sunny;Cool;Normal;Weak;true
+Rain;Mild;Normal;Weak;true
+Sunny;Mild;Normal;Weak;true
+Overcast;Mild;High;Strong;true
+Overcast;Hot;Normal;Weak;true
+Rain;Cool;High;Strong;false

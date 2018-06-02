@@ -1,12 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Scan : StateMachineBaseBehaviour {
-
+    public static List<FarmField> farmFields;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         hasFinished = false;
-        agent.Scan(1, Task.State.Start);
+        farmFields = new List<FarmField>();
+        agent.Scan(1);
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
@@ -18,8 +20,8 @@ public class Scan : StateMachineBaseBehaviour {
         }
 
         TaskScan taskScan = agent.TaskManager.CurrentTask as TaskScan;
-        var detected = taskScan.FarmFields;
-        if (detected.Any()) {
+        farmFields = taskScan.FarmFields;
+        if (farmFields.Any()) {
             animator.SetBool("MakeDecision", true);
         } else {
             animator.SetBool("Scan", false);

@@ -63,7 +63,7 @@ public class TaskGotoAndFillUpResource : Task {
 
 
     public void Finish_Enter() {
-        Debug.Log("Koniec drogi...");
+        Debug.Log($"Uzupełniłem zasoby: {ResourceType}");
     }
 }
 

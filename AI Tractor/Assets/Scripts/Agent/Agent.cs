@@ -11,7 +11,7 @@ public class Agent : MonoBehaviour {
 
     }
 
-    public void GoTo(Vector3 destination, Task.State state) {
+    public void GoTo(Vector3 destination, Task.State state = Task.State.Start) {
         var task = GetComponent<TaskGoTo>();
         task.NavMeshAgent = GetComponent<NavMeshAgent>();
         task.Destination = new Vector3((int) destination.x, 0, (int) destination.z);
@@ -22,13 +22,13 @@ public class Agent : MonoBehaviour {
         GoTo(StartPosition, Task.State.Start);
     }
 
-    public void Scan(int radius, Task.State state) {
+    public void Scan(int radius, Task.State state = Task.State.Start) {
         var task = GetComponent<TaskScan>();
         task.Radius = radius;
         TaskManager.SetTask(task, state);
     }
 
-    public void DoFarmAction(FarmField farmField, Property.Type propertyType, ResourceType resourceType, int points, Task.State state) {
+    public void DoFarmAction(FarmField farmField, Property.Type propertyType, ResourceType resourceType, int points = 1, Task.State state = Task.State.Start) {
         var task = GetComponent<TaskFarmAction>();
         task.FarmField = farmField;
         task.Equipment = GetComponent<Equipment>();
@@ -38,13 +38,13 @@ public class Agent : MonoBehaviour {
 
         TaskManager.SetTask(task, state);
     }
-    public void FillUpResource(ResourceType resourceType, Task.State state) {
+    public void FillUpResource(ResourceType resourceType, Task.State state = Task.State.Start) {
         var task = GetComponent<TaskFillUpResource>();
         task.Equipment = GetComponent<Equipment>();
         task.ResourceType = resourceType;
         TaskManager.SetTask(task, state);
     }
-    public void GoToFillUpResource(ResourceType resourceType, Task.State state) {
+    public void GoToFillUpResource(ResourceType resourceType, Task.State state = Task.State.Start) {
         var task = GetComponent<TaskGotoAndFillUpResource>();
         task.Equipment = GetComponent<Equipment>();
         task.NavMeshAgent = GetComponent<NavMeshAgent>();
@@ -52,7 +52,7 @@ public class Agent : MonoBehaviour {
 
         TaskManager.SetTask(task, state);
     }
-    public void Harvest(FarmField farmField, Task.State state) {
+    public void Harvest(FarmField farmField, Task.State state = Task.State.Start) {
         var task = GetComponent<TaskHarvest>();
         task.FarmField = farmField;
 

@@ -19,10 +19,10 @@ public class Locations : MonoBehaviour {
 
     private void Start() {
         locations = new Dictionary<ResourceType, Vector3>() {
-            { ResourceType.Fertilizer, fertilizerPoint.transform.position },
-            { ResourceType.Soil, soilPoint.transform.position },
-            { ResourceType.Pesticide, pesticidePoint.transform.position },
-            { ResourceType.Water, waterPoint.transform.position }
+            { ResourceType.FertilityRes, fertilizerPoint.transform.position },
+            { ResourceType.AcidityRes, soilPoint.transform.position },
+            { ResourceType.PollutionRes, pesticidePoint.transform.position },
+            { ResourceType.HumidityRes, waterPoint.transform.position }
         };
     }
 }

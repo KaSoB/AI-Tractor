@@ -22,30 +22,32 @@ public class Equipment : MonoBehaviour {
     void Start() {
         nameText.text = gameObject.name;
         resources = new Dictionary<ResourceType, Resource>() {
-            { ResourceType.Fertilizer, new Resource(fertilizerText) },
-            { ResourceType.Water, new Resource(waterText) },
-            { ResourceType.Pesticide, new Resource(pesticidesText) },
-            { ResourceType.Soil, new Resource(soilText) }
+            { ResourceType.FertilityRes, new Resource(fertilizerText) },
+            { ResourceType.HumidityRes, new Resource(waterText) },
+            { ResourceType.PollutionRes, new Resource(pesticidesText) },
+            { ResourceType.AcidityRes, new Resource(soilText) }
         };
     }
 
-    public int GetResourceLevel(ResourceType resourceType) {
-        return resources[resourceType].Amount;
-    }
-    public void PushPoints(ResourceType resourceType, int points) {
+    public void AddPoints(ResourceType resourceType, int points) {
         resources[resourceType].Amount += points;
     }
-    public void PopPoints(ResourceType resourceType, int points) {
+    public void RemovePoints(ResourceType resourceType, int points) {
         resources[resourceType].Amount -= points;
+    }
+    public int GetResourceLevel(ResourceType resourceType) {
+        return resources[resourceType].Amount;
     }
     public int SetResourceLevel(ResourceType resourceType, int level = Resource.MAX_LEVEL) {
         return resources[resourceType].Amount = level;
     }
-
+    public bool HasResources(ResourceType resourceType) {
+        return GetResourceLevel(resourceType) >= 1;
+    }
 }
 
 public enum ResourceType {
-    Water, Pesticide, Fertilizer, Soil // TODO: Wymyśleć coś zamiast Soil // edycja ctrl+r x2
+    HumidityRes, PollutionRes, FertilityRes, AcidityRes
 }
 
 public class Resource {

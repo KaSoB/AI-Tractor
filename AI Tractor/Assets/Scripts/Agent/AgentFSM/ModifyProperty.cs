@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 
-public class GoTo : StateMachineBaseBehaviour {
+public class ModifyProperty : StateMachineBaseBehaviour {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        hasFinished = false;
-        agent.GoTo(MakeDecision.FarmField.transform.position, Task.State.Start);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
         if (agent.TaskManager.HasFinished()) {
-            animator.SetBool("Harvest", true);
+            animator.SetBool("ModifyProperty", false);
             return;
         }
     }

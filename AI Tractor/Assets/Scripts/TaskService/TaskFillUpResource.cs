@@ -23,5 +23,9 @@ public class TaskFillUpResource : Task {
     public void Interrupt_Enter() {
         Debug.Log(ErrorMessage);
     }
+
+    public void Finish_Enter() {
+        Debug.Log($"Uzupełniłem zasoby: {ResourceType}");
+    }
 }
 

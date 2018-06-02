@@ -21,20 +21,22 @@ public class TaskFarmAction : Task {
 
     public void Execute_Update() {
         if (Points > 0) {
-            // pobierz z agenta points
-            Equipment.PopPoints(ResourceType, Points);
-            // dodaj polu points
+            // pobierz z agenta points, dodaj polu points
+            Equipment.RemovePoints(ResourceType, Points);
             FarmField.AddLevel(PropertyType, Points);
         } else {
-            FarmField.DeleteLevel(PropertyType, Points);
+            Equipment.RemovePoints(ResourceType, -Points); // jest dobrze 
+            FarmField.DeleteLevel(PropertyType, -Points);
         }
-
-
         FSM.ChangeState(State.Finish);
     }
 
     public void Interrupt_Enter() {
         Debug.Log(ErrorMessage);
+    }
+
+    public void Finish_Enter() {
+        Debug.Log($"Wykonana akcja na {FarmField.name}: {ResourceType} {Points}");
     }
 }
 

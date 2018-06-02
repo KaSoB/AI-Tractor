@@ -64,7 +64,7 @@ public class FarmField : MonoBehaviour {
         SetProperty(id, GetLevel(id) + points);
     }
     public void DeleteLevel(Property.Type id, int points) {
-        SetProperty(id, GetLevel(id) + points);
+        SetProperty(id, GetLevel(id) - points);
     }
 
     public Property GetProperty(Property.Type id) {

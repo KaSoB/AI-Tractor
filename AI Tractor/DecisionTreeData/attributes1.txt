@@ -1,0 +1,5 @@
+ATTRIBUTE Outlook   {Sunny,Overcast,Rain}
+ATTRIBUTE Temperature      {Hot,Mild,Cool}
+ATTRIBUTE Humidity   	   {High,Normal}
+
+ATTRIBUTE Wind       {Weak,Strong}

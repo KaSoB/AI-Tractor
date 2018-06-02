@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class TaskScan : Task {
@@ -26,9 +27,8 @@ public class TaskScan : Task {
     }
 
     public void Finish_Enter() {
-        Debug.Log("Znalazłem...");
-        foreach (var item in FarmFields) {
-            Debug.Log(item.name);
-        }
+        StringBuilder stringBuilder = new StringBuilder();
+        FarmFields.ForEach(it => stringBuilder.Append(it.name + " "));
+        Debug.Log("Wykryłem... " + stringBuilder.ToString());
     }
 }
