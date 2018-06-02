@@ -20,10 +20,12 @@ public class TaskGotoAndFillUpResource : Task {
     }
 
     public void GoTo() {
-        path = GameObject
+        path = new Queue<Node>(GameObject
             .FindGameObjectWithTag("Grid")
             .GetComponent<NodesGrid>()
-            .GetPath(Subject.transform.position, Locations.locations[ResourceType]);
+            .GetPath(Subject.transform.position, Locations.locations[ResourceType], gameObject)
+            .Select(it => it.Node)
+            .ToList());
 
         if (path == null) {
             Debug.Log("Nie znalazłem ścieżki do " + Locations.locations[ResourceType]);

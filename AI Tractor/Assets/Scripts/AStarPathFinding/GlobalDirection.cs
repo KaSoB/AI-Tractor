@@ -1,36 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
 public class GlobalDirection {
-    public static Direction GetDirection(Position p1, Position p2) {
-        double angle = Math.Atan2(p2.Y - p1.Y, p2.X - p1.X);
-        angle += Math.PI;
-        angle /= Math.PI / 4;
-        int halfQuarter = Convert.ToInt32(angle);
-        halfQuarter %= 8;
-        return (Direction) halfQuarter;
-    }
-    public static string GetAction(Direction currentDirection, Direction targetDirection) {
-        int rotation = ((int) targetDirection - (int) currentDirection + 8) % 8;
-
-        if (rotation == 0)
-            return ("Straight");
-        else if (rotation == 1)
-            return ("Turn left (S)");
-        else if (rotation == 2)
-            return ("Turn left");
-        else if (rotation == 3)
-            return ("Turn left (H)");
-        else if (rotation == 4)
-            return ("Turn back");
-        else if (rotation == 5)
-            return ("Turn right (H)");
-        else if (rotation == 6)
-            return ("Turn right");
-        else
-            return ("Turn left (S)");
-    }
     public static Direction GetDirection(GameObject gameObject) {
         // TODO: Angle czasem zwraca zły wynik (zwraca 0)
         float angle = (gameObject.transform.localRotation.eulerAngles.y + 360F) % 360F;
@@ -53,6 +25,16 @@ public class GlobalDirection {
             return Direction.East;
         }
     }
+    public static Dictionary<Direction, Position> Locations = new Dictionary<Direction, Position>() {
+                { Direction.North,  new Position { X=-1, Y=0 } },
+                { Direction.NorthEast, new Position { X=-1, Y=1 } },
+                { Direction.East,  new Position { X=0, Y=1 } },
+                { Direction.SouthEast, new Position { X=1, Y=1 } },
+                { Direction.South,  new Position { X=1, Y=0 } },
+                { Direction.SouthWest, new Position { X=1,Y=-1 } },
+                { Direction.West,  new Position { X=0, Y=-1 } },
+                { Direction.NorthWest, new Position { X=-1, Y=-1 } }
+            };
 }
 
 public enum Direction {

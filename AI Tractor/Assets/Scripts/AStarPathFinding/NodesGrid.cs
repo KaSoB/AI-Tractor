@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.AStarPathFinding;
-using AStarPathFinding;
+﻿using AStarPathFinding;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,20 +16,28 @@ public class NodesGrid : MonoBehaviour {
         tmpNodes.ForEach(item => nodes[item.Position.X, item.Position.Y] = item);
     }
 
-    public Queue<Node> GetPath(Vector3 startPosition, Vector3 target) {
+    public Queue<AStarState> GetPath(Vector3 startPosition, Vector3 target, GameObject gameObject) {
         if (!IsInsideGrid(startPosition) || !IsInsideGrid(target)) {
             return null;
         }
-        Node startNode = GetNode(startPosition);
-        Node targetNode = GetNode(target);
 
+
+        AStarState targetNode = new AStarState() {
+            Node = GetNode(target)
+        };
+
+        AStarState startNode = new AStarState() {
+            Node = GetNode(startPosition),
+            Action = GlobalDirection.GetDirection(gameObject),
+            Parent = targetNode
+        };
         var path = AStar.FindPath(this, startNode, targetNode);
 
 
-        // foreach (var item in path) {
-        //     Debug.Log("{" + item.Node.Position.ToString() + "}" + " " + item.Direction + " " + item.Action);
-        // }
-        return new Queue<Node>(AStarState.ToNodes(path));
+        foreach (var item in path) {
+            Debug.Log("{" + item.Node.Position.ToString() + "}" + " " + item.Action);
+        }
+        return new Queue<AStarState>(path);
     }
 
     public void ClearScore() {

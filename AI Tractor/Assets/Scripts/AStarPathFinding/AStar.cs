@@ -1,86 +1,76 @@
-﻿using Assets.Scripts.AStarPathFinding;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace AStarPathFinding {
-    /// <summary>
-    /// Info: https://en.wikipedia.org/wiki/A*_search_algorithm
-    /// </summary>
     public static class AStar {
-        public static IEnumerable<AStarState> FindPath(NodesGrid grid, Node startNode, Node targetNode) {
-            if (!startNode.Walkable || !targetNode.Walkable) {
+        public static IEnumerable<AStarState> FindPath(NodesGrid grid, AStarState startNode, AStarState targetNode) {
+            if (!startNode.Node.Walkable || !targetNode.Node.Walkable) {
                 return new List<AStarState>();
             }
             grid.ClearScore();
-            // todo: kolejka priorytetowa
-            List<Node> openSet = new List<Node>() {
+
+            MinHeap<AStarState> openSet = new MinHeap<AStarState> {
                 startNode
             };
-            HashSet<Node> closedSet = new HashSet<Node>();
+            HashSet<AStarState> closedSet = new HashSet<AStarState>();
 
             while (openSet.Any()) {
                 var currentNode = openSet.Min();
 
-                if (currentNode == targetNode) {
-                    return ReconstructPath(startNode, targetNode);
+                if (currentNode.Node == targetNode.Node) {
+                    return ReconstructPath(startNode, currentNode);
                 }
-
-                openSet.Remove(currentNode);
+                openSet.ExtractDominating();
                 closedSet.Add(currentNode);
+                foreach (AStarState successor in GetSuccessors(grid, currentNode).Where(it => it.Node.Walkable && !closedSet.Contains(it))) {
 
-                // znajdź wszystkich sąsiadów obecnego węzła, który jest przechodni i nie był wcześniej odwiedzany
-                foreach (Node neighbour in GetNeighbours(grid, currentNode).Where(it => it.Walkable && !closedSet.Contains(it))) {
+                    int costToNeighbour = currentNode.Node.G_Score + successor.Node.Cost + GetDistance(currentNode.Node.Position, successor.Node.Position);
+                    if (costToNeighbour < successor.Node.G_Score || !openSet.Contains(successor)) {
+                        successor.Node.G_Score = costToNeighbour;
+                        successor.Node.H_Score = GetDistance(successor.Node.Position, targetNode.Node.Position);
+                        successor.Node.Parent = currentNode.Node;
 
-                    int costToNeighbour = currentNode.G_Score + neighbour.Cost + GetDistance(currentNode.Position, neighbour.Position);
-                    if (costToNeighbour < neighbour.G_Score || !openSet.Contains(neighbour)) {
-                        neighbour.G_Score = costToNeighbour;
-                        neighbour.H_Score = GetDistance(neighbour.Position, targetNode.Position);
-                        neighbour.Parent = currentNode;
 
-                        if (!openSet.Contains(neighbour)) {
-                            openSet.Add(neighbour);
+                        if (!openSet.Contains(successor)) {
+                            openSet.Add(successor);
                         }
-
                     }
                 }
             }
             return new List<AStarState>();
         }
 
-        private static IEnumerable<AStarState> ReconstructPath(Node startNode, Node targetNode) {
-            List<Node> path = new List<Node>();
-            Node currentNode = targetNode;
-            while (currentNode != startNode) {
+        private static IEnumerable<AStarState> ReconstructPath(AStarState startNode, AStarState targetNode) {
+            List<AStarState> path = new List<AStarState>();
+            AStarState currentNode = targetNode;
+            while (currentNode.Node != startNode.Node) {
                 // Dodaj do ścieżki
                 path.Add(currentNode);
                 currentNode = currentNode.Parent;
             }
             path.Reverse();
-            return AStarState.CreateStates(path, startNode);
+            return path;
         }
 
-        private static IEnumerable<Node> GetNeighbours(NodesGrid grid, Node node) {
-            List<Node> neighbours = new List<Node>();
-            foreach (var location in NeighbourLocations) {
-                var neighboursPosition = node.Position + location.Value;
+        private static IEnumerable<AStarState> GetSuccessors(NodesGrid grid, AStarState node) {
+            List<AStarState> succesors = new List<AStarState>();
 
+            foreach (Direction action in Enum.GetValues(typeof(Direction))) {
+                var neighboursPosition = node.Node.Position + GlobalDirection.Locations[action];
                 if (grid.IsInsideGrid(neighboursPosition)) {
-                    neighbours.Add(grid.GetNode(neighboursPosition));
+                    succesors.Add(new AStarState() {
+                        Node = grid.GetNode(neighboursPosition),
+                        Action = action,
+                        Parent = node
+                    });
                 }
             }
-            return neighbours;
+            return succesors;
         }
-        private static Dictionary<Direction, Position> NeighbourLocations = new Dictionary<Direction, Position>() {
-                { Direction.North,  new Position { X=0, Y=1 } },
-                { Direction.NorthEast, new Position { X=1, Y=1 } },
-                { Direction.East,  new Position { X=1, Y=0 } },
-                { Direction.SouthEast, new Position { X=1, Y=-1 } },
-                { Direction.South,  new Position { X=0, Y=-1 } },
-                { Direction.SouthWest, new Position { X=-1,Y=-1 } },
-                { Direction.West,  new Position { X=-1, Y=0 } },
-                { Direction.NorthWest, new Position { X=-1, Y=1 } }
-            };
+
+
 
         public static int GetDistance(Position position1, Position position2) {
             int dstX = Mathf.Abs(position1.X - position2.X);
@@ -89,5 +79,8 @@ namespace AStarPathFinding {
             return (dstX > dstY) ? 14 * dstY + 10 * (dstX - dstY) : 14 * dstX + 10 * (dstY - dstX);
         }
     }
+
+
+
 }
 

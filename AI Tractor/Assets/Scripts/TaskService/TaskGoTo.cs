@@ -19,10 +19,11 @@ public class TaskGoTo : Task {
     }
 
     public void GoTo() {
-        path = GameObject
+        path = new Queue<Node>(GameObject
             .FindGameObjectWithTag("Grid")
             .GetComponent<NodesGrid>()
-            .GetPath(Subject.transform.position, Destination);
+            .GetPath(Subject.transform.position, Destination, gameObject)
+            .Select(it => it.Node).ToList());
 
         if (path == null) {
             Debug.Log("Nie znalazłem ścieżki do " + Destination);
