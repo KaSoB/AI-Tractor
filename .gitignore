@@ -1,8 +1,8 @@
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
+AI Tractor/[Ll]ibrary/
+AI Tractor/[Tt]emp/
+AI Tractor/[Oo]bj/
+AI Tractor/[Bb]uild/
+AI Tractor/[Bb]uilds/
 /Assets/AssetStoreTools*
 
 # Visual Studio 2015 cache directory
