@@ -19,7 +19,7 @@ async def read_data(reader):
 async def handle_client(reader, writer):
     print("connected")
     while True:
-        data = await reader.readline(timeout=1)
+        data = await reader.readline()
         if not data:
             print("disconnectng")
             break
