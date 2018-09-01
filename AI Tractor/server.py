@@ -1,10 +1,9 @@
-import sys
-import socket
 import asyncio
 
 
 HOST = '127.0.0.1'
 PORT = 8000
+
 
 async def read_data(reader):
     data = b''
