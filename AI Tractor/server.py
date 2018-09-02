@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 import asyncio
 
+from predict import Predictor
 
 HOST = '127.0.0.1'
 PORT = 8000
@@ -17,14 +19,17 @@ async def read_data(reader):
 
 async def handle_client(reader, writer):
     print("connected")
+    predictor = Predictor()
     while True:
         data = await reader.readline()
         if not data:
             print("disconnectng")
             break
-        print(data)
-        result = "some_text\n"
-        writer.write(str(result).encode())
+        data = data.decode()[:-1]
+        result = predictor.predict(data)
+        print('Recognized "{}" as "{}".'.format(data, result))
+        msg = str(result) + '\n'
+        writer.write(msg.encode())
 
 
 if __name__ == '__main__':
@@ -33,6 +38,7 @@ if __name__ == '__main__':
     server = loop.run_until_complete(coro)
 
     try:
+        print('Server is ready.')
         loop.run_forever()
     except KeyboardInterrupt:
         pass

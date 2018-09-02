@@ -20,11 +20,10 @@ public class SocketManager
 		this.writer = new System.IO.StreamWriter (stream);
 	}
 
-	public void GetInfo(String msg){
+	public String GetInfo(String msg){
 		this.writer.Write(msg + "\n");
 		this.writer.Flush ();
-		var res = this.reader.ReadLine ();
-		Debug.Log (res);
+		return this.reader.ReadLine ();
 	}
 }
 
