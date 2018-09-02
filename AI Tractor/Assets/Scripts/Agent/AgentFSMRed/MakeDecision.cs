@@ -5,6 +5,7 @@ using UnityEngine;
 namespace RedAgent {
 	public class MakeDecision : StateMachineBaseBehaviour {
 	    public static FarmField FarmField;
+		public static SocketManager ipcManager = new SocketManager ();
 	    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 	        base.OnStateEnter(animator, stateInfo, layerIndex);
 	        FarmField = null;
@@ -17,6 +18,8 @@ namespace RedAgent {
 	            return;
 	        }
 	        hasFinished = true;
+
+			ipcManager.GetInfo ("casdasd");
 
 	        foreach (var farmField in Scan.farmFields) {
 	            var decisionTree = DecisionTreeRunner.Instance.GetDecision(CreateInfo(farmField));
