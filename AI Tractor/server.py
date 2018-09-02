@@ -38,6 +38,7 @@ if __name__ == '__main__':
     server = loop.run_until_complete(coro)
 
     try:
+        print('Server is ready.')
         loop.run_forever()
     except KeyboardInterrupt:
         pass
