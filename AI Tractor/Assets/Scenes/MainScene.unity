@@ -11514,6 +11514,11 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 01b72bbdc8f896c4294edacf5a906463, type: 2}
+    - target: {fileID: 114447286920496168, guid: 5369123eaecf6fa4c955b0d2d619b76a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114123126512484546, guid: 5369123eaecf6fa4c955b0d2d619b76a, type: 2}
     - {fileID: 114434432150218718, guid: 5369123eaecf6fa4c955b0d2d619b76a, type: 2}
@@ -20410,7 +20415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd98d7c0b33afb4e9dbdeb41101b772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
+  agent: {fileID: 1967722161}
 --- !u!114 &1883134677
 MonoBehaviour:
   m_ObjectHideFlags: 0
