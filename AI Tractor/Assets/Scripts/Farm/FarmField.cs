@@ -88,5 +88,12 @@ public class FarmField : MonoBehaviour {
         return fieldType.ToString() + " field";
     }
 
+	public string GetImage(){
+		String basePath = "image_samples/test/";
+		System.Random r = new System.Random ();
+		var i = r.Next (1, 5);
+		return basePath + this.fieldType.ToString () + '/' + i.ToString() + ".jpg";
+	}
+
 }
 
