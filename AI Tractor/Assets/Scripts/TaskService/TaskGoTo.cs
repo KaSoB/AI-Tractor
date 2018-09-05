@@ -2,7 +2,6 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-
 public class TaskGoTo : Task {
     public NavMeshAgent NavMeshAgent { get; set; }
     public Vector3 Destination { get; set; } // cel na mapie

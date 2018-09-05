@@ -36,7 +36,7 @@ public class TaskFarmAction : Task {
     }
 
     public void Finish_Enter() {
-        Debug.Log($"Wykonana akcja na {FarmField.name}: {ResourceType} {Points}");
+        Debug.Log("Wykonana akcja na {FarmField.name}: {ResourceType} {Points}");
     }
 }
 

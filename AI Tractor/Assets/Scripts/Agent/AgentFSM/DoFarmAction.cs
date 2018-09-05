@@ -7,10 +7,10 @@ public class DoFarmAction : StateMachineBaseBehaviour {
         farmField = MakeDecision.FarmField;
         hasFinished = false;
 
-        if (farmField.Progress == 1) {
-            animator.SetBool("Harvest", true);
+       
+        animator.SetBool("Harvest", true);
             agent.Harvest(farmField, Task.State.Start);
-        } else if (farmField.GetLevel(Property.Type.Humidity) == 1 && equipment.HasResources(ResourceType.HumidityRes)) {
+        if (farmField.GetLevel(Property.Type.Humidity) == 1 && equipment.HasResources(ResourceType.HumidityRes)) {
             animator.SetBool("ModifyProperty", true);
             agent.DoFarmAction(farmField, Property.Type.Humidity, ResourceType.HumidityRes, 1);
         } else if (farmField.GetLevel(Property.Type.Fertylity) <= 2 && equipment.HasResources(ResourceType.FertilityRes)) {

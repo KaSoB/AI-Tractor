@@ -11,7 +11,7 @@ public class FarmField : MonoBehaviour {
     public enum FieldType {
         Corn, Wheat, Carrot
     }
-
+ 
     [SerializeField]
     private FieldType fieldType;
 
@@ -83,11 +83,11 @@ public class FarmField : MonoBehaviour {
     public FieldType GetFieldType() {
         return fieldType;
     }
-
+    
     public override string ToString() {
         return fieldType.ToString() + " field";
     }
-
+    
 	public string GetImage(){
 		String basePath = "image_samples/test/";
 		System.Random r = new System.Random ();
